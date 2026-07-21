@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora CEMA com Gráficos Dinâmicos</title>
+    <!-- Importando Chart.js via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #f59e0b;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        h1 { grid-column: 1 / -1; text-align: center; color: var(--secondary); margin-bottom: 30px; }
+        h2 { margin-top: 0; font-size: 1.25rem; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+
+        .input-group { margin-bottom: 15px; }
+        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        input[type="number"]:focus { outline: none; border-color: var(--primary); }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+        button:hover { background: var(--secondary); }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .result-item {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .result-value { font-size: 1.5rem; font-weight: bold; color: var(--primary); display: block; }
+        .result-label { font-size: 0.85rem; color: #64748b; }
+
+        /* Chart Container Styles */
+        .chart-container {
+            grid-column: 1 / -1;
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+        
+        .status-bar {
+            grid-column: 1 / -1;
+            background: #ecfdf5;
+            border: 1px solid #10b981;
+            color: #065f46;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📊 Calculadora CEMA com Análise Gráfica</h1>
+
+    <div class="container">
+        <!-- Inputs -->
+        <div class="card">
+            <h2>⚙️ Parâmetros de Entrada</h2>
+            <div class="input-group">
+                <label>Comprimento Horizontal (L) [m]</label>
+                <input type="number" id="length" value="150" min="10">
+            </div>
+            <div class="input-group">
+                <label>Elevação Vertical (H) [m] (Negativo para descida)</label>
+                <input type="number" id="height" value="10" step="0.1">
+            </div>
+            <div class="input-group">
+                <label>Capacidade (Q) [tph]</label>
+                <input type="number" id="capacity" value="500" min="10">
+            </div>
+            <div class="input-group">
+                <label>Velocidade da Correia (V) [m/s]</label>
+                <input type="number" id="speed" value="2.5" step="0.1" min="0.5" max="6.0">
+            </div>
+           
+            <div class="input-group">
+                <label>Peso da Correia (Wb) [kg/m]</label>
+                <input type="number" id="beltWeight" value="12.5" step="0.1">
+            </div>
+            <button onclick="calculateAndGraph()">🔄 Calcular e Atualizar Gráficos</button>
+        </div>
+
+        <!-- Results -->
+        <div class="card">
+            <h2>📈 Resultados CEMA</h2>
+            <div class="results-grid">
+                <div class="result-item">
+                    <span class="result-value" id="res-wm">0.00</span>
+                    <span class="result-label">Peso Material (kg/m)</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-value" id="res-te">0</span>
+                    <span class="result-label">Tensão Efetiva Te (N)</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-value" id="res-t1">0</span>
+                    <span class="result-label">Tensão Máxima T1 (N)</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-value" id="res-t2">0</span>
+                    <span class="result-label">Tensão Fuga T2 (N)</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-value" id="res-power">0.0</span>
+                    <span class="result-label">Potência Tambor (kW)</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-value" id="res-motor" style="color: var(--accent)">0</span>
+                    <span class="result-label">Motor Sugerido (kW)</span>
+                </div>
+            </div>
+            <div style="margin-top: 20px; font-size: 0.9rem; color: #64748b;">
+                <p><strong>Nota:</strong> O gráfico abaixo simula o comportamento do sistema variando a velocidade de 0.5 m/s até o valor máximo configurado, mostrando como a Tensão e Potência respondem.</p>
+            </div>
+        </div>
+
+        <!-- Dynamic Chart Section -->
+        <div class="card chart-container">
+            <h2>📉 Análise de Desempenho (Velocidade vs. Carga)</h2>
+            <canvas id="performanceChart"></canvas>
+        </div>
+
+        <div id="statusBar" class="status-bar"></div>
+    </div>
+
+    <script>
+        let myChart = null;
+
+        function calculateCEMA_Values(L, H, Q, V, Wb) {
+            // Constantes
+            const g = 9.81;
+            const Kt = 1.0;
+            const Cw = 0.35;
+            const Ai_carry = 2.3;
+            const Ai_return = 1.4;
+            const Lc = 1.2;
+            const Lr = 2.4;
+            const Acc = 500.0;
+
+            // Cálculos
+            const Wm = (Q * 1000 / 3600) / V;
+            const termo_inercia = ((Ai_carry / Lc) + (Ai_return / Lr)) * g;
+            const termo_peso = 0.00068 * (Wb + Wm);
+            const Kx = termo_peso + termo_inercia;
+
+            const totalWeight = Wb + Wm;
+            let Ky = 0.022;
+            if (totalWeight > 20 && totalWeight <= 50) Ky = 0.019;
+            if (totalWeight > 50) Ky = 0.016;
+
+            const Res_Rot_Flex = L * Kt * (Kx + Ky * (Wb + Wm));
+            const Res_Elev = Wm * H * g;
+            
+            const Te = Res_Rot_Flex + Res_Elev + Acc;
+            const T2 = Te * Cw;
+            const T1 = Te + T2;
+
+            const Pot_Tambor = (Te * V) / 1000;
+            const Eff_Total = 0.94 * 0.95;
+            const Pot_Motor_Final = Math.ceil((Pot_Tambor / Eff_Total) * 1.15);
+       
+            return { Wm, Te, T1, T2, Pot_Tambor, Pot_Motor_Final };
+        }
+
+        
+        function calculateAndGraph() {
+            // 1. Obter Inputs Principais
+            const L = parseFloat(document.getElementById('length').value);
+            const H = parseFloat(document.getElementById('height').value);
+            const Q = parseFloat(document.getElementById('capacity').value);
+            const V_target = parseFloat(document.getElementById('speed').value);
+            const Wb = parseFloat(document.getElementById('beltWeight').value);
+
+            if (V_target <= 0 || L <= 0) {
+                alert("Valores inválidos.");
+                return;
+            }
+
+            // 2. Calcular para o ponto atual (exibição numérica)
+            const current = calculateCEMA_Values(L, H, Q, V_target, Wb);
+
+            document.getElementById('res-wm').innerText = current.Wm.toFixed(2);
+            document.getElementById('res-te').innerText = Math.round(current.Te);
+            document.getElementById('res-t1').innerText = Math.round(current.T1);
+            document.getElementById('res-t2').innerText = Math.round(current.T2);
+            document.getElementById('res-power').innerText = current.Pot_Tambor.toFixed(2);
+            document.getElementById('res-motor').innerText = current.Pot_Motor_Final;
+            
+        
+            // 3. Gerar Dados para o Gráfico (Simulação de Variação de Velocidade)
+            // Vamos variar a velocidade de 0.5 m/s até V_target * 1.2 para mostrar a tendência
+            const labels = [];
+            const dataTension = [];
+            const dataPower = [];
+            const dataWm = []; // Peso do material varia inversamente com a velocidade para mesma vazão
+
+            const steps = 10;
+            const maxV = Math.max(V_target * 1.2, 6.0); // Mostra um pouco além do atual
+            
+            for (let i = 1; i <= steps; i++) {
+                let v = (maxV / steps) * i;
+                if (v < 0.5) v = 0.5;
+                
+                labels.push(v.toFixed(1) + " m/s");
+                
+                // Recalcula para esta velocidade específica mantendo Q constante
+                const sim = calculateCEMA_Values(L, H, Q, v, Wb);
+                
+                dataTension.push(sim.T1); // Tensão Máxima
+                dataPower.push(sim.Pot_Tambor); // Potência
+                dataWm.push(sim.Wm);
+            }
+
+            // 4. Atualizar ou Criar o Gráfico
+            updateChart(labels, dataTension, dataPower, V_target);
+
+            // Feedback
+            const statusBar = document.getElementById('statusBar');
+            statusBar.style.display = 'block';
+            statusBar.innerText = `Gráfico atualizado! Ponto atual: ${V_target} m/s. A tensão diminui com o aumento da velocidade (para mesma vazão), mas a potência tende a estabilizar ou aumentar levemente devido ao atrito.`;
+        }
+
+        function updateChart(labels, tensionData, powerData, currentV) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+
+            if (myChart) {
+                myChart.destroy();
+            }
+
+            myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Tensão Máxima T1 (N)',
+                            data: tensionData,
+                            borderColor: '#ef4444', // Vermelho
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            yAxisID: 'y',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Potência no Tambor (kW)',
+                            data: powerData,
+                            borderColor: '#2563eb', // Azul
+                            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                            yAxisID: 'y1',
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y.toFixed(2);
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        annotation: {
+                            // Poderia adicionar plugin de annotation aqui para marcar a velocidade atual
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Velocidade da Correia (m/s)'
+                            },
+                            grid: {
+                                color: (context) => context.tick.value === currentV ? '#2563eb' : '#e2e8f0',
+                                lineWidth: (context) => context.tick.value === currentV ? 2 : 1
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Tensão (Newtons)',
+                                color: '#ef4444'
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Potência (kW)',
+                                color: '#2563eb'
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Calcular automaticamente ao carregar
+        window.onload = calculateAndGraph;
+
+        
+    </script>
+
+    <h2>Resultado: <span id="mostraValor">0</span></h2>
+          
+    
+</body>
+</html>Copied!   

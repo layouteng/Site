@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout Engenharia | Soluções em Mineração</title>
+    <style>
+        /* --- RESET E VARIÁVEIS (CORES ATUALIZADAS) --- */
+        :root {
+            /* Sugestão de cores baseada em identidade industrial moderna: 
+               Azul Profundo (Engenharia/Confiança) e Laranja (Segurança/Ação) */
+            --primary-color: #e65100; /* Laranja Industrial (Destaque) */
+            --secondary-color: #0d47a1; /* Azul Layout (Base Sólida) */
+            --dark-bg: #1a1a1a;
+            --light-bg: #f4f6f8;
+            --text-color: #333;
+            --white: #ffffff;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* --- HEADER & NAV --- */
+        header {
+            background: var(--white); /* Fundo branco para destaque do logo */
+            color: var(--secondary-color);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logo span { 
+            color: var(--primary-color); 
+        }
+
+        /* Elemento gráfico no logo simulando um layout/engrenagem */
+        .logo-icon {
+            width: 10px;
+            height: 10px;
+            background: var(--primary-color);
+            display: inline-block;
+            transform: rotate(45deg);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            font-weight: 600;
+            color: var(--secondary-color);
+            transition: var(--transition);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover { color: var(--primary-color); }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            /* Imagem de fundo com tom azulado para combinar com a nova identidade */
+            background: linear-gradient(rgba(13, 71, 161, 0.8), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1579564893236-67d5c8d4f7c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 1rem;
+            margin-top: 60px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            color: var(--white);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            color: #e0e0e0;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: #bf360c;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(230, 81, 0, 0.4);
+        }
+
+        /* --- SECTIONS GERAL --- */
+        section {
+            padding: 5rem 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .section-title .line {
+            width: 80px;
+            height: 5px;
+            background: var(--primary-color);
+            margin: 0 auto;
+        }
+
+        /* --- SERVIÇOS (CARDS) --- */
+        .services {
+            background: var(--light-bg);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            text-align: center;
+            border-top: 5px solid var(--secondary-color);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-top: 5px solid var(--primary-color);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+        }
+
+        /* --- CALCULADORA INTERATIVA --- */
+        .calculator-section {
+            background: var(--secondary-color);
+            color: var(--white);
+        }
+
+        .calculator-section .section-title h2 {
+            color: var(--white);
+        }
+
+        .calc-container {
+            background: rgba(255,255,255,0.05);
+            padding: 2.5rem;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #ddd;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+        }
+
+        .result-box {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: var(--primary-color);
+            color: var(--white);
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* --- SOBRE --- */
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-text h3 {
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            background: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
+            border-radius: 8px;
+            box-shadow: 15px 15px 0px var(--primary-color);
+            position: relative;
+        }
+        
+        .about-image::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid var(--secondary-color);
+            border-radius: 8px;
+            z-index: -1;
+        }
+
+        /* --- CONTATO --- */
+        .contact {
+            background: var(--white);
+        }
+
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+        }
+
+        .contact-info, .contact-form {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .info-item {
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .info-icon {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            background: rgba(230, 81, 0, 0.1);
+            padding: 10px;
+            border-radius: 50%;
+        }
+
+        .info-item h4 {
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        form input, form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #fafafa;
+            transition: var(--transition);
+        }
+
+        form input:focus, form textarea:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            background: #fff;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--secondary-color);
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            padding: 3rem 1rem;
+            border-top: 5px solid var(--primary-color);
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                right: 0;
+                background: var(--white);
+                width: 100%;
+                text-align: center;
+                padding: 1rem 0;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+
+            nav ul.active { display: flex; }
+            .menu-toggle { display: block; }
+            
+            header { background: var(--white); }
+            nav a { color: var(--secondary-color); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span class="logo-icon"></span>
+            Layout<span>Engenharia</span>
+        </div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <nav>
+            <ul id="nav-list">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#servicos">Soluções</a></li>
+                <li><a href="#calculadora">Simulador</a></li>
+                <li><a href="#sobre">A Empresa</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Excelência em Engenharia</h1>
+            <p>Especialista em Engenharia de Alta Performance.</p>
+            <button class="btn" onclick="document.getElementById('servicos').scrollIntoView({behavior: 'smooth'})">Nossas Soluções</button>
+        </div>
+    </section>
+
+    <!-- Serviços -->
+    <section id="servicos" class="services">
+        <div class="section-title">
+            <h2>Nossas Especialidades</h2>
+            <div class="line"></div>
+        </div>
+        <div class="services-grid">
+            <!-- Card 1 -->
+            <div class="card">
+                <div class="card-icon">⚙️</div>
+                <h3>Transportadores de Correia</h3>
+                <p>Projetos sob medida para longas distâncias e alta capacidade. Tecnologia de ponta em correias e roletes para máxima eficiência.</p>
+            </div>
+            <!-- Card 2 -->
+            <div class="card">
+                <div class="card-icon">🚜</div>
+                <h3>Máquinas de Pátio</h3>
+                <p>Empilhadeiras e recuperadoras automatizadas. Otimização logística para minérios e grãos com precisão milimétrica.</p>
+            </div>
+            <!-- Card 3 -->
+            <div class="card">
+                <div class="card-icon">🏗️</div>
+                <h3>Equipamentos de Mineração</h3>
+                <p>Fabricação, automatização e engenharia personalizada para otimização de processos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculadora Interativa -->
+    <section id="calculadora" class="calculator-section">
+        <div class="section-title">
+            <h2>Cálculo Transportador de correia</h2>
+            <div class="line"></div>
+            <p style="margin-top: 10px; opacity: 0.8;">Ferramenta Layout Eng: Estime os principais dados do transportador</p>
+        </div>
+               
+        <iframe src="C:\Users\layouteng\Documents\Pagina\CalculoTR.html" width="100%" height="1500px"></iframe>
+
+        <div class="section-title">
+            <h2>Cálculo Tensionador de Correia Automático</h2>
+            <div class="line"></div>
+            <p style="margin-top: 10px; opacity: 0.8;">Ferramenta Layout Eng: Com a tensão da correia, calcule seu ATS</p>
+        </div>
+               
+        <iframe src="C:\Users\layouteng\Documents\Pagina\Calculo_guincho.html" width="100%" height="1500px"></iframe>
+
+        
+    </section>
+
+    <!-- Sobre -->
+    <section id="sobre">
+        <div class="section-title">
+            <h2>Sobre a Layout Engenharia</h2>
+            <div class="line"></div>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Projetando o Futuro</h3>
+                <p>A <strong>Layout Engenharia</strong> consolidou-se como referência nacional com soluções em engenaria. Nossa missão é entregar equipamentos que unam robustez, eficiência energética e segurança operacional.</p>
+                <br>
+                <p>Com um parque industrial moderno, somos especialistas em reconfigurar processos produtivos e desenvolver soluções que atendam a necessidade dos clientes. Atuamos em parceria com as principais empresas do país.</p>
+                <br>
+                <ul style="list-style: disc; margin-left: 20px; color: var(--secondary-color); font-weight: 500;">
+                    <li>Engenharia Personalizada</li>
+                    <li>Automatização de Processos</li>
+                    <li>Reengenahria de processos</li>
+                </ul>
+            </div>
+            <div class="about-image"></div>
+        </div>
+    </section>
+
+    <!-- Contato -->
+    <section id="contato" class="contact">
+        <div class="section-title">
+            <h2>Fale Conosco</h2>
+            <div class="line"></div>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="info-item">
+                    <span class="info-icon">📍</span>
+                    <div class="map-container" style="margin-top: 2rem; width: 100%; height: 450px; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3751.366663579856!2d-43.93668992365098!3d-19.93997398135896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa69088b5555555%3A0x123456789abcdef!2sR.%20Prof.%20Moraes%2C%20562%20-%20Savassi%2C%20Belo%20Horizonte%20-%20MG%2C%2030150-370!5e0!3m2!1spt-BR!2sbr!4v1721500000000!5m2!1spt-BR!2sbr" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">📞</span>
+                    <div>
+                        <h4>Telefone</h4>
+                        <p>(31) 99607-4838</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">✉️</span>
+                    <div>
+                        <h4>Email</h4>
+                        <p>layout@layouteng.com</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">💼</span>
+                    <div>
+                        <h4>LinkedIn</h4>
+                        <p>linkedin.com/company/layout-engenharia</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form onsubmit="event.preventDefault(); alert('Mensagem enviada para a Layout Engenharia!');">
+                    <input type="text" placeholder="Seu Nome" required>
+                    <input type="email" placeholder="Seu Email Corporativo" required>
+                    <input type="text" placeholder="Assunto" required>
+                    <textarea rows="5" placeholder="Como podemos ajudar no seu projeto?" required></textarea>
+                    <button type="submit" class="btn">Enviar Solicitação</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Layout Engenharia. Todos os direitos reservados.</p>
+        <p style="font-size: 0.9rem; opacity: 0.8;">Engenharia Especializada.</p>
+    </footer>
+
+    <!-- Scripts JavaScript -->
+    <script>
+        // Menu Mobile Toggle
+        function toggleMenu() {
+            const navList = document.getElementById('nav-list');
+            navList.classList.toggle('active');
+        }
+
+        // Fechar menu ao clicar
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('nav-list').classList.remove('active');
+            });
+        });
+
+        // Lógica da Calculadora
+        function calculateCapacity() {
+            const width = parseFloat(document.getElementById('width').value);
+            const speed = parseFloat(document.getElementById('speed').value);
+            const materialFactor = parseFloat(document.getElementById('material').value);
+            const resultBox = document.getElementById('result');
+
+            if (!width || !speed) {
+                resultBox.style.display = 'block';
+                resultBox.style.background = '#c62828'; // Vermelho erro
+                resultBox.innerText = "Preencha largura e velocidade.";
+                return;
+            }
+
+            // Cálculo estimado
+            const widthMeters = width / 1000;
+            const estimatedFlow = (500 * speed * (widthMeters * widthMeters) * materialFactor).toFixed(2);
+
+            resultBox.style.display = 'block';
+            resultBox.style.background = 'var(--primary-color)';
+            resultBox.innerHTML = `Capacidade Estimada: <br><span style="font-size: 1.8rem">${estimatedFlow} t/h</span>`;
+        }
+
+        // Scroll Suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>   

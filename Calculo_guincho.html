@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dimensionamento Guincho - NBR 8400 (Todas as Classes)</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #f59e0b;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --border: #e2e8f0;
+        }
+
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 900px) { .container { grid-template-columns: 1fr; } }
+
+        .card { background: var(--card); border-radius: 12px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: 1px solid var(--border); border-top: 5px solid var(--primary); }
+        h1 { grid-column: 1 / -1; text-align: center; color: var(--secondary); margin-bottom: 30px; }
+        h2 { margin-top: 0; font-size: 1.25rem; border-bottom: 2px solid var(--border); padding-bottom: 10px; color: var(--primary); }
+
+        .input-group { margin-bottom: 15px; }
+        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; }
+        input[type="number"], select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 1rem; box-sizing: border-box; }
+        
+        button { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background 0.2s; margin-top: 10px; }
+        button:hover { background: var(--secondary); }
+
+        .results-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
+        .result-item { background: #f1f5f9; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #e2e8f0; }
+        .result-value { font-size: 1.4rem; font-weight: bold; color: var(--primary); display: block; }
+        .result-label { font-size: 0.8rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .class-info { grid-column: 1 / -1; background: #eff6ff; border: 1px solid #3b82f6; color: #1e40af; padding: 15px; border-radius: 8px; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center; }
+        .class-badge { background: var(--primary); color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; }
+
+        .chart-container { grid-column: 1 / -1; position: relative; height: 400px; width: 100%; }
+        .status-bar { grid-column: 1 / -1; background: #ecfdf5; border: 1px solid #10b981; color: #065f46; padding: 15px; border-radius: 8px; display: none; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h1>🏗️ Calculadora de Guincho - NBR 8400 / ISO 4301</h1>
+    
+    <div class="container">
+        <!-- Inputs -->
+        <div class="card">
+            <h2>⚙️ Dados de Entrada</h2>
+            
+            <div class="input-group">
+                <label>Classe do Mecanismo (ISO 4301 / FEM)</label>
+                <select id="mechanismClass" onchange="calculateHoist()">
+                    <option value="M1">M1 - Muito Leve (Ocasional)</option>
+                    <option value="M2">M2 - Leve</option>
+                    <option value="M3">M3 - Moderado</option>
+                    <option value="M4">M4 - Pesado</option>
+                    <option value="M5">M5 - Muito Pesado</option>
+                    <option value="M6">M6 - Contínuo Pesado</option>
+                    <option value="M7">M7 - Contínuo Muito Pesado</option>
+                    <option value="M8" selected>M8 - Contínuo Severo (Especial)</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label>Carga Nominal (Q) [kg]</label>
+                <input type="number" id="load" value="res-te" min="100">
+            </div>
+            <div class="input-group">
+                <label>Velocidade de Elevação (V) [m/min]</label>
+                <input type="number" id="speed" value="4" step="0.5">
+            </div>
+            <div class="input-group">
+                <label>Peso do Moitão/Gancho (W_hook) [kg]</label>
+                <input type="number" id="hookWeight" value="250">
+            </div>
+            <div class="input-group">
+                <label>Número de Ramais do Cabo (n)</label>
+                <input type="number" id="ropes" value="4" min="1">
+            </div>
+            <div class="input-group">
+                <label>Tipo de Cabo</label>
+                <select id="ropeType">
+                    <option value="1960">Aço 1960 N/mm² (Padrão)</option>
+                    <option value="2160">Aço 2160 N/mm² (Alta Resistência)</option>
+                </select>
+            </div>
+            <button onclick="calculateHoist()">🔄 Calcular Dimensionamento</button>
+        </div>
+
+        <!-- Results -->
+        <div class="card">
+            <h2>📊 Resultados NBR 8400</h2>
+            <div id="classInfo" class="class-info">
+                <span id="classDesc">Classe Selecionada: M8</span>
+                <span class="class-badge" id="classBadge">Zp Mín: 9.0</span>
+            </div>
+            <div class="results-grid">
+                <div class="result-item">
+                    <span class="result-value" id="res-dynamic-load">0</span>
+                    <span class="result-label">Carga Dinâmica Total (N)</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-value" id="res-rope-force">0</span>
+                    <span class="result-label">Tração no Cabo (N)</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-value" id="res-rope-diam">0.0</span>
+                    <span class="result-label">Diâmetro Cabo Mín. (mm)</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-value" id="res-drum-diam">0</span>
+                    <span class="result-label">Diâmetro Tambor Mín. (mm)</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-value" id="res-power">0.0</span>
+                    <span class="result-label">Potência Motor (kW)</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-value" id="res-safety" style="color: #b91c1c">0.0</span>
+                    <span class="result-label">Coef. Segurança Real (Zp)</span>
+                </div>
+            </div>
+            <div style="margin-top: 20px; font-size: 0.85rem; color: #64748b;">
+                <p><strong>Nota:</strong> Os fatores de segurança e relações D/d são ajustados automaticamente conforme a norma FEM 1.001 / ISO 4308 para a classe selecionada.</p>
+            </div>
+        </div>
+
+        <!-- Dynamic Chart -->
+        <div class="card chart-container">
+            <h2>📈 Análise de Segurança vs. Carga</h2>
+            <canvas id="safetyChart"></canvas>
+        </div>
+
+        <div id="statusBar" class="status-bar"></div>
+    </div>
+
+    <script>
+        let myChart = null;
+
+        // Tabela de Parâmetros por Classe (Baseado em FEM 1.001 / ISO 4301)
+        const CLASS_PARAMS = {
+            'M1': { zp: 3.15, ratio: 14.0, phi: 1.05, desc: "Muito Leve (Manutenção Ocasional)", hours: "< 1.600h" },
+            'M2': { zp: 3.35, ratio: 15.0, phi: 1.06, desc: "Leve", hours: "1.600 - 3.200h" },
+            'M3': { zp: 3.55, ratio: 16.0, phi: 1.08, desc: "Moderado", hours: "3.200 - 6.300h" },
+            'M4': { zp: 4.00, ratio: 17.0, phi: 1.10, desc: "Pesado", hours: "6.300 - 12.500h" },
+            'M5': { zp: 4.50, ratio: 19.0, phi: 1.11, desc: "Muito Pesado", hours: "12.500 - 25.000h" },
+            'M6': { zp: 5.60, ratio: 21.0, phi: 1.12, desc: "Contínuo Pesado", hours: "25.000 - 50.000h" },
+            'M7': { zp: 7.10, ratio: 23.5, phi: 1.13, desc: "Contínuo Muito Pesado", hours: "> 50.000h" },
+            'M8': { zp: 9.00, ratio: 25.0, phi: 1.15, desc: "Contínuo Severo (Metalurgia/Porto)", hours: "> 50.000h (Severo)" }
+        };
+
+        function calculateHoist() {
+            // 1. Inputs
+            const mechClass = document.getElementById('mechanismClass').value;
+            const Q_kg = parseFloat(document.getElementById('load').value);
+            const V_m_min = parseFloat(document.getElementById('speed').value);
+            const W_hook_kg = parseFloat(document.getElementById('hookWeight').value);
+            const n_ramps = parseFloat(document.getElementById('ropes').value);
+            const ropeStrength = parseFloat(document.getElementById('ropeType').value);
+
+            // 2. Obter Parâmetros da Classe Selecionada
+            const params = CLASS_PARAMS[mechClass];
+            const minSafetyFactor = params.zp;
+            const ratio_D_d = params.ratio;
+            const phi = params.phi; // Coeficiente dinâmico
+
+            // Atualizar UI de Info da Classe
+            document.getElementById('classDesc').innerHTML = `<strong>${mechClass}</strong>: ${params.desc} <br><small>Vida útil típica: ${params.hours}</small>`;
+            document.getElementById('classBadge').innerText = `Zp Mín: ${minSafetyFactor}`;
+
+            // Constantes
+            const g = 9.81;
+            const efficiency = 0.95; 
+            const motorEff = 0.90;
+
+            // 3. Cálculos Principais
+            const totalStaticMass = Q_kg + W_hook_kg;
+            const totalDynamicForce = totalStaticMass * g; 
+            const forcePerRope = totalDynamicForce / n_ramps;
+
+            // Dimensionamento do Cabo
+            const requiredBreakingLoad = forcePerRope * minSafetyFactor;
+            // Fórmula aproximada: F_ruptura (N) ≈ 0.38 * Resistencia (MPa) * d(mm)^2 * 100 (ajuste unidade) -> Simplificado: d = sqrt(F / (0.38 * R))
+            // Nota: 0.38 é um fator empírico médio para cabos de aço.
+            const ropeDiameter = Math.sqrt(requiredBreakingLoad / (0.38 * ropeStrength)); 
+            
+            // Arredondar para comercial (pares)
+            const commercialRopeDiam = Math.ceil(ropeDiameter / 2) * 2; 
+            
+            // Recalcular segurança real
+            const actualBreakingLoad = 0.38 * ropeStrength * (commercialRopeDiam) ** 2;
+            const actualSafetyFactor = actualBreakingLoad / forcePerRope;
+
+            // Dimensionamento do Tambor
+            const drumDiameter = commercialRopeDiam * ratio_D_d;
+
+            // Potência do Motor
+            const V_m_s = V_m_min / 60;
+            const powerKw = (totalDynamicForce * V_m_s) / (1000 * motorEff);
+
+            // 4. Atualizar UI Resultados
+            document.getElementById('res-dynamic-load').innerText = Math.round(totalDynamicForce);
+            document.getElementById('res-rope-force').innerText = Math.round(forcePerRope);
+            document.getElementById('res-rope-diam').innerText = commercialRopeDiam.toFixed(0);
+            document.getElementById('res-drum-diam').innerText = Math.ceil(drumDiameter);
+            document.getElementById('res-power').innerText = powerKw.toFixed(2);
+            document.getElementById('res-safety').innerText = actualSafetyFactor.toFixed(2);
+
+            // 5. Gerar Gráfico
+            generateSafetyChart(Q_kg, W_hook_kg, n_ramps, ropeStrength, minSafetyFactor, phi, commercialRopeDiam);
+
+            // Feedback
+            const statusBar = document.getElementById('statusBar');
+            statusBar.style.display = 'block';
+            statusBar.innerText = `Dimensionamento para classe ${mechClass} concluído. Cabo sugerido: ${commercialRopeDiam}mm. Segurança real: ${actualSafetyFactor.toFixed(2)} (Exigido: ≥ ${minSafetyFactor}).`;
+        }
+
+        function generateSafetyChart(baseLoad, hookWeight, ramps, strength, minSafety, phi, commDiam) {
+            const ctx = document.getElementById('safetyChart').getContext('2d');
+            const g = 9.81;
+
+            const labels = [];
+            const safetyData = [];
+            const limitData = [];
+
+            // Simular de 10% a 150% da carga
+            for (let i = 10; i <= 150; i += 10) {
+                const currentLoad = (baseLoad * i) / 100;
+                const totalMass = currentLoad + hookWeight;
+                const dynForce = totalMass * g * phi;
+                const forceRope = dynForce / ramps; 
+                
+                // Segurança baseada no cabo comercial selecionado para a carga BASE
+                const actualBreaking = 0.38 * strength * (commDiam) ** 2;
+                const currentSafety = actualBreaking / forceRope;
+
+                labels.push(`${i}%`);
+                safetyData.push(currentSafety);
+                limitData.push(minSafety);
+            }
+
+            if (myChart) myChart.destroy();
+
+            myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Coeficiente de Segurança Real (Zp)',
+                            data: safetyData,
+                            borderColor: '#2563eb',
+                            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.3
+                        },
+                        {
+                            label: `Limite Mínimo Norma (${minSafety})`,
+                            data: Array(15).fill(minSafety),
+                            borderColor: '#b91c1c',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            fill: false,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    scales: {
+                        y: {
+                            title: { display: true, text: 'Coeficiente de Segurança (Zp)' },
+                            min: 0,
+                            max: Math.max(...safetyData) * 1.2
+                        },
+                        x: {
+                            title: { display: true, text: 'Carga Operacional (% da Nominal)' }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)}`
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        window.onload = calculateHoist;
+    </script>
+</body>
+</html>   
