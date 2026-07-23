@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dimensionamento de Redutor Planetário (ISO 6336 + FEM)</title>
+    <!-- Chart.js para os gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #0056b3;
+            --secondary: #f8f9fa;
+            --text: #333;
+            --border: #ddd;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: var(--text); background: #f4f4f4; margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1, h2 { color: var(--primary); text-align: center; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+        
+        .input-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background 0.3s; margin-top: 10px; }
+        button:hover { background: #004494; }
+        
+        .results { margin-top: 30px; display: none; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
+        th, td { border: 1px solid var(--border); padding: 10px; text-align: center; }
+        th { background: var(--primary); color: white; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        
+        .chart-container { position: relative; height: 300px; margin-top: 20px; }
+        .alert { padding: 15px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 4px; margin-top: 20px; text-align: center; font-weight: bold; }
+        .alert-error { background: #f8d7da; color: #721c24; border-color: #f5c6cb; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Dimensionamento de Redutor Planetário</h1>
+    <p style="text-align: center;">Norma ISO 6336 (Cálculo) | FEM 1.001 (Classe de Serviço)</p>
+
+    <div class="grid">
+        <!-- Entradas -->
+        <div>
+            <h2>Parâmetros de Entrada</h2>
+            <div class="input-group">
+                <label>Torque de Saída (Nm):</label>
+                <input type="number" id="torque" value="5000" step="100">
+            </div>
+            <div class="input-group">
+                <label>Rotação do Motor (RPM):</label>
+                <input type="number" id="rpm_motor" value="1750" step="10">
+            </div>
+            <div class="input-group">
+                <label>Rotação de Saída (RPM):</label>
+                <input type="number" id="rpm_saida" value="50" step="1">
+            </div>
+            <div class="input-group">
+                <label>Número de Estágios:</label>
+                <input type="number" id="estagios" value="2" min="1" max="5">
+            </div>
+            <div class="input-group">
+                <label>Classe de Mecanismo (FEM 1.001):</label>
+                <select id="classe_fem">
+                    <option value="M1">M1 - Muito Leve (Uso raro)</option>
+                    <option value="M2">M2 - Leve (Uso ocasional)</option>
+                    <option value="M3" selected>M3 - Moderado (Uso normal)</option>
+                    <option value="M4">M4 - Pesado (Uso frequente)</option>
+                    <option value="M5">M5 - Muito Pesado (Intenso)</option>
+                    <option value="M6">M6 - Extremo (Ciclos rápidos)</option>
+                    <option value="M7">M7 - Severo (Ambientes críticos)</option>
+                    <option value="M8">M8 - Muito Severo (24/7 Contínuo)</option>
+                </select>
+            </div>
+            <button onclick="calcular()">Calcular Dimensionamento</button>
+        </div>
+
+        <!-- Resultados Principais -->
+        <div id="resumo" style="display:none; flex-direction: column; justify-content: center;">
+            <div class="alert" id="msg_modulo"></div>
+            <div style="margin-top: 20px;">
+                <p><strong>Relação Total:</strong> <span id="res_i"></span></p>
+                <p><strong>Relação por Estágio:</strong> <span id="res_i_est"></span></p>
+                <p><strong>Fator de Serviço (K_A):</strong> <span id="res_ka"></span></p>
+                <p><strong>Potência do Motor:</strong> <span id="res_pot"></span> kW</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="results" id="area_graficos">
+        <h2>Análise Gráfica</h2>
+        <div class="grid">
+            <div>
+                <h3>Torque por Estágio</h3>
+                <div class="chart-container">
+                    <canvas id="chartTorque"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>Vida Útil (Horas) por Estágio</h3>
+                <div class="chart-container">
+                    <canvas id="chartVida"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabela Detalhada -->
+    <div class="results" id="area_tabela">
+        <h2>Tabela de Dados por Estágio</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Estágio</th>
+                    <th>Rotação Saída (RPM)</th>
+                    <th>Torque Saída (Nm)</th>
+                    <th>Potência (kW)</th>
+                    <th>Vida Útil (Horas)</th>
+                </tr>
+            </thead>
+            <tbody id="tabela_corpo"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Variáveis globais para os gráficos
+    let chartTorqueInst = null;
+    let chartVidaInst = null;
+
+    function calcular() {
+        // 1. Obter Entradas
+        const T_saida = parseFloat(document.getElementById('torque').value);
+        const N_motor = parseFloat(document.getElementById('rpm_motor').value);
+        const N_saida = parseFloat(document.getElementById('rpm_saida').value);
+        const num_estagios = parseInt(document.getElementById('estagios').value);
+        const classe_fem = document.getElementById('classe_fem').value;
+
+        // Validação simples
+        if (!T_saida || !N_motor || !N_saida || !num_estagios) {
+            alert("Por favor, preencha todos os campos corretamente.");
+            return;
+        }
+
+        // 2. Parâmetros FEM e Projeto
+        const tabela_fem = { "M1": 0.8, "M2": 0.9, "M3": 1.0, "M4": 1.25, "M5": 1.6, "M6": 2.0, "M7": 2.5, "M8": 3.15 };
+        const Ka = tabela_fem[classe_fem];
+        
+        const num_planetas = 3;
+        const material_limite = 1400.0; // MPa
+        const seguranca_min = 1.2;
+        const sigma_HP = material_limite / seguranca_min;
+        const eficiencia = 0.97;
+        const largura_fator = 10.0;
+        const p_expoente = 12.0;
+
+        // 3. Cinemática
+        const i_total = N_motor / N_saida;
+        const i_estagio = Math.pow(i_total, 1.0 / num_estagios);
+
+        // 4. Cálculo Reverso (Torque e Rotação por estágio)
+        let torques = [];
+        let rotações = [];
+        let t_temp = T_saida;
+        let n_temp = N_saida;
+
+        for (let i = num_estagios; i >= 1; i--) {
+            torques.unshift(t_temp);
+            rotações.unshift(n_temp);
+            if (i > 1) {
+                t_temp = t_temp / (i_estagio * eficiencia);
+                n_temp = n_temp * i_estagio;
+            }
+        }
+
+        // 5. Dimensionamento do Módulo (Último Estágio)
+        const torque_critico = torques[num_estagios - 1] * Ka;
+        const z_sol = 20;
+        const z_anel = Math.round(z_sol * (i_estagio - 1));
+        const modulos_padrao = [1.0, 1.25, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0, 20.0];
+        
+        let modulo_sel = 20.0;
+        let dimensionado = false;
+
+        for (let m of modulos_padrao) {
+            const d_sol = z_sol * m;
+            const d_anel = z_anel * m;
+            const d_planeta = (d_anel - d_sol) / 2;
+            if (d_planeta <= 0) continue;
+
+            const b = largura_fator * m;
+            const torque_sol = torque_critico / (i_estagio * num_planetas);
+            const Ft = (2000 * torque_sol) / d_sol;
+            const u = z_anel / z_sol;
+            
+            const Z_H = 2.5, Z_E = 189.8, Z_eps = 0.85;
+            const termo = (Ft / (b * d_sol)) * ((u + 1) / u);
+            const sigma_H = Z_H * Z_E * Z_eps * Math.sqrt(termo);
+            
+            if ((material_limite / sigma_H) >= seguranca_min) {
+                modulo_sel = m;
+                dimensionado = true;
+                break;
+            }
+        }
+
+        // 6. Atualizar Resumo
+        document.getElementById('resumo').style.display = 'flex';
+        document.getElementById('res_i').innerText = i_total.toFixed(2);
+        document.getElementById('res_i_est').innerText = i_estagio.toFixed(2);
+        document.getElementById('res_ka').innerText = Ka;
+        document.getElementById('res_pot').innerText = ((T_saida * N_saida) / 9550 / Math.pow(eficiencia, num_estagios)).toFixed(2);
+        
+        const msgDiv = document.getElementById('msg_modulo');
+        if (dimensionado) {
+            msgDiv.className = 'alert';
+            msgDiv.innerText = `Módulo Selecionado: ${modulo_sel} mm (Atende FEM ${classe_fem})`;
+        } else {
+            msgDiv.className = 'alert alert-error';
+            msgDiv.innerText = "Atenção: Nenhum módulo padrão até 20mm atendeu. Aumente a largura ou mude o material.";
+        }
+
+        // 7. Calcular Vida e Preparar Dados da Tabela/Gráficos
+        let dadosVida = [];
+        let dadosTorque = [];
+        let labels = [];
+        let tbody = document.getElementById('tabela_corpo');
+        tbody.innerHTML = '';
+
+        for (let i = 0; i < num_estagios; i++) {
+            const n_est = rotações[i];
+            const t_est = torques[i];
+            const pot_est = (t_est * n_est) / 9550.0;
+            
+            // Cálculo Tensão Estágio
+            const torque_sol_i = t_est / (i_estagio * num_planetas);
+            const d_sol = z_sol * modulo_sel;
+            const d_anel = z_anel * modulo_sel;
+            const b = largura_fator * modulo_sel;
+            const Ft_i = (2000 * torque_sol_i) / d_sol;
+            const u = z_anel / z_sol;
+            const sigma_H_i = 2.5 * 189.8 * 0.85 * Math.sqrt((Ft_i / (b * d_sol)) * ((u + 1) / u));
+            
+            let vida = 0;
+            if (sigma_H_i > 0) {
+                vida = (1000000 / (60 * n_est)) * Math.pow((sigma_HP / sigma_H_i), p_expoente);
+            }
+
+            dadosVida.push(vida);
+            dadosTorque.push(t_est);
+            labels.push(`Estágio ${i+1}`);
+
+            // Preencher Tabela
+            let row = `<tr>
+                <td>${i+1}</td>
+                <td>${n_est.toFixed(1)}</td>
+                <td>${t_est.toFixed(1)}</td>
+                <td>${pot_est.toFixed(2)}</td>
+                <td>${vida > 1e9 ? '> 1 Bilhão' : vida.toLocaleString('pt-BR', {maximumFractionDigits: 0})}</td>
+            </tr>`;
+            tbody.innerHTML += row;
+        }
+
+        // 8. Renderizar Gráficos
+        document.getElementById('area_graficos').style.display = 'block';
+        document.getElementById('area_tabela').style.display = 'block';
+        renderCharts(labels, dadosTorque, dadosVida);
+    }
+
+    function renderCharts(labels, torqueData, vidaData) {
+        // Destruir gráficos anteriores se existirem
+        if (chartTorqueInst) chartTorqueInst.destroy();
+        if (chartVidaInst) chartVidaInst.destroy();
+
+        // Gráfico de Torque
+        const ctxT = document.getElementById('chartTorque').getContext('2d');
+        chartTorqueInst = new Chart(ctxT, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Torque de Saída (Nm)',
+                    data: torqueData,
+                    backgroundColor: 'rgba(0, 86, 179, 0.6)',
+                    borderColor: 'rgba(0, 86, 179, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // Gráfico de Vida (Escala Logarítmica é ideal para vida útil)
+        const ctxV = document.getElementById('chartVida').getContext('2d');
+        chartVidaInst = new Chart(ctxV, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Vida Útil (Horas)',
+                    data: vidaData,
+                    backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                    borderColor: 'rgba(40, 167, 69, 1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        type: 'logarithmic',
+                        title: { display: true, text: 'Horas (Escala Log)' }
+                    }
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>   
