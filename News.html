@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering World Digest</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f1f5f9;
+            --sub-text: #94a3b8;
+            --accent: #38bdf8;
+            --border: #334155;
+            --tag-bg: #334155;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 { margin: 0; font-size: 2rem; color: var(--accent); }
+        .subtitle { color: var(--sub-text); margin-top: 5px; }
+
+        /* Featured Story Section */
+        .featured-section {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid var(--accent);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-tag {
+            background: var(--accent);
+            color: var(--bg);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .featured-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 10px 0;
+            line-height: 1.2;
+        }
+
+        .featured-summary {
+            font-size: 1.1rem;
+            color: var(--sub-text);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Selector Section */
+        .selector-section {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .selector-label {
+            display: block;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--sub-text);
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 1rem;
+            background-color: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            appearance: none; /* Remove default arrow */
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 15px;
+            transition: border-color 0.2s;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        /* Display Area for Selected News */
+        #display-area {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: var(--bg);
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .news-meta {
+            font-size: 0.85rem;
+            color: var(--sub-text);
+            margin-top: 15px;
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            color: var(--sub-text);
+            font-size: 0.8rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🏗️ Engineering World</h1>
+        <div class="subtitle">Daily Digest: Top Stories & Selection</div>
+    </header>
+
+    <!-- 1. Featured Story (Always shown first) -->
+    <section class="featured-section" id="featured-card">
+        <span class="featured-tag">🔥 Featured Story</span>
+        <h2 class="featured-title" id="fed-title">Loading...</h2>
+        <p class="featured-summary" id="fed-summary">...</p>
+        <div class="news-meta" id="fed-meta">Source: Global Engineering Daily</div>
+    </section>
+
+    <!-- 2. Selector Box -->
+    <section class="selector-section">
+        <label for="news-select" class="selector-label">🔍 Select a specific news topic to view details:</label>
+        
+        <select id="news-select" onchange="showSelectedNews()">
+            <option value="" disabled selected>-- Choose a topic --</option>
+            <!-- Options will be populated by JS -->
+        </select>
+
+        <!-- Dynamic Display Area -->
+        <div id="display-area">
+            <span class="featured-tag" id="sel-cat">Category</span>
+            <h3 id="sel-title" style="margin-top:10px; color: var(--accent);">Title</h3>
+            <p id="sel-summary" style="font-size: 1.1rem; line-height: 1.6;">Summary text here.</p>
+            <div class="news-meta" id="sel-meta">Source | Time</div>
+        </div>
+    </section>
+
+    <div class="footer">
+        <p>⚡ Offline Mode: No API required. Data cached locally.</p>
+    </div>
+</div>
+
+<script>
+    // 1. The News Database
+    const newsData = [
+        {
+            id: 1,
+            category: "Software",
+            headline: "Quantum Error Correction Breakthrough",
+            summary: "Researchers have demonstrated a new method to stabilize qubits, potentially solving the error rate issues that have plagued quantum computing for decades. This could lead to fault-tolerant systems within 5 years.",
+            source: "Global Tech Review",
+            time: "2 hours ago",
+            featured: true // This one is set as the default featured story
+        },
+        {
+            id: 2,
+            category: "Civil",
+            headline: "Self-Healing Concrete Bridge Opens in Europe",
+            summary: "A revolutionary bio-concrete containing dormant bacteria that produce limestone when cracked has been successfully used in a major highway overpass, promising a 50-year lifespan extension.",
+            source: "Civil Engineering Today",
+            time: "4 hours ago",
+            featured: false
+        },
+        {
+            id: 3,
+            category: "Space",
+            headline: "Nuclear Thermal Propulsion for Mars Missions",
+            summary: "A private aerospace firm unveils a nuclear thermal propulsion prototype that could cut travel time to Mars from 9 months to just 5, revolutionizing deep space logistics and crew safety.",
+            source: "Aerospace Weekly",
+            time: "6 hours ago",
+            featured: false
+        },
+        {
+            id: 4,
+            category: "Energy",
+            headline: "Solid-State Batteries Reach 1,000km Range",
+            summary: "Mass production of solid-state batteries has begun at a major facility in Asia, offering EVs with 1,000km range and 10-minute charging times, finally solving range anxiety.",
+            source: "Energy Innovation",
+            time: "8 hours ago",
+            featured: false
+        },
+        {
+            id: 5,
+            category: "Autonomous Vehicles",
+            headline: "First Cross-Continental Trucking Convoy Success",
+            summary: "A fully driverless convoy of heavy-duty trucks successfully navigated complex highway and urban traffic conditions across the continent without human intervention, marking a milestone for logistics.",
+            source: "Transport Engineering",
+            time: "12 hours ago",
+            featured: false
+        },
+        {
+            id: 6,
+            category: "Biotech",
+            headline: "3D Printed Human Tissue for Transplants",
+            summary: "Engineers have successfully 3D printed functional human kidney tissue using patient-specific cells, paving the way for zero-rejection organ transplants in the near future.",
+            source: "BioTech Daily",
+            time: "1 day ago",
+            featured: false
+        }
+    ];
+
+    // 2. Initialize the Application
+    function init() {
+        // Set Featured Story
+        const featuredStory = newsData.find(item => item.featured) || newsData[0];
+        document.getElementById('fed-title').innerText = featuredStory.headline;
+        document.getElementById('fed-summary').innerText = featuredStory.summary;
+        document.getElementById('fed-meta').innerText = `${featuredStory.source} | ${featuredStory.time}`;
+
+        // Populate Select Box
+        const selectBox = document.getElementById('news-select');
+        
+        // Add an option for the Featured story too
+        const featOption = document.createElement('option');
+        featOption.value = featuredStory.id;
+        featOption.text = `⭐ Featured: ${featuredStory.headline.substring(0, 40)}...`;
+        featOption.selected = true;
+        selectBox.appendChild(featOption);
+
+        // Add other stories
+        newsData.forEach(item => {
+            if (!item.featured) {
+                const option = document.createElement('option');
+                option.value = item.id;
+                option.text = `📌 ${item.category}: ${item.headline.substring(0, 35)}...`;
+                selectBox.appendChild(option);
+            }
+        });
+    }
+
+    // 3. Function to display selected news
+    function showSelectedNews() {
+        const selectBox = document.getElementById('news-select');
+        const displayArea = document.getElementById('display-area');
+        const id = parseInt(selectBox.value);
+
+        const story = newsData.find(item => item.id === id);
+
+        if (story) {
+            // Update content
+            document.getElementById('sel-cat').innerText = story.category;
+            document.getElementById('sel-title').innerText = story.headline;
+            document.getElementById('sel-summary').innerText = story.summary;
+            document.getElementById('sel-meta').innerText = `${story.source} • ${story.time}`;
+
+            // Show the area with animation
+            displayArea.style.display = 'block';
+            
+            // Scroll to the display area on mobile
+            displayArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    }
+
+    // Run on load
+    window.onload = init;
+</script>
+
+</body>
+</html>
