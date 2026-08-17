@@ -497,6 +497,52 @@
         
     </section>
 
+     <!-- NOVA SEÇÃO: IA RAG - Preenchimento de Datasheets -->
+    <section id="ia-datasheet" style="background: #f8fafc; padding: 5rem 10%; border-top: 1px solid #e2e8f0;">
+        <div class="section-title">
+            <h2 style="color: var(--secondary-color);">Automação Inteligente de Datasheets (RAG)</h2>
+            <div class="line"></div>
+            <p style="margin-top: 10px; color: #64748b;">Envie os manuais do cliente e a folha de dados em branco. O LLaMA 3.2 fará o preenchimento técnico automático mantendo a formatação original.</p>
+        </div>
+
+        <div style="max-width: 700px; margin: 0 auto; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 2.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
+            <form id="uploadForm" class="space-y-6">
+                <!-- Upload Planilha -->
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; font-weight: 600; color: #1e293b; margin-bottom: 0.5rem;">Folha de Dados (Template Excel .xlsx)</label>
+                    <input type="file" id="templateFile" accept=".xlsx" required
+                        style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; background: #f8fafc; cursor: pointer;">
+                </div>
+
+                <!-- Upload Manuais -->
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; font-weight: 600; color: #1e293b; margin-bottom: 0.5rem;">Manuais / Documentação do Cliente (PDFs ou TXTs)</label>
+                    <input type="file" id="docsFiles" accept=".pdf,.txt" multiple required
+                        style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; background: #f8fafc; cursor: pointer;">
+                </div>
+
+                <!-- Botão Enviar -->
+                <button type="submit" id="btnSubmit" class="btn" style="width: 100%;">
+                    Processar e Preencher Datasheet
+                </button>
+            </form>
+
+            <!-- Status / Loading -->
+            <div id="statusBox" style="display: none; margin-top: 1.5rem; padding: 1rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; text-align: center;">
+                <p id="statusText" style="color: #1e40af; font-weight: 600; font-size: 0.95rem;">Processando documentos e cruzando dados com LLaMA 3.2 na nuvem... Aguarde.</p>
+            </div>
+
+            <!-- Download de Resultado -->
+            <div id="downloadBox" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; text-align: center;">
+                <p style="color: #166534; font-weight: 600; margin-bottom: 1rem;">Planilha preenchida com sucesso mantendo a formatação original!</p>
+                <a id="downloadLink" href="#" target="_blank"
+                    style="display: inline-block; padding: 12px 24px; background: #16a34a; color: #ffffff; font-weight: bold; border-radius: 8px; text-decoration: none;">
+                    Baixar Planilha Preenchida (.xlsx)
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Sobre -->
     <section id="sobre">
         <div class="section-title">
