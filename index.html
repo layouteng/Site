@@ -497,7 +497,8 @@
         
     </section>
 
-    <!-- NOVA SEÇÃO: IA RAG - Preenchimento de Datasheets -->
+    
+<!-- NOVA SEÇÃO: IA RAG - Preenchimento de Datasheets -->
 <section id="ia-datasheet" style="background: #f8fafc; padding: 5rem 10%; border-top: 1px solid #e2e8f0;">
     <div class="section-title">
         <h2 style="color: var(--secondary-color);">Automação Inteligente de Datasheets (RAG)</h2>
@@ -543,7 +544,7 @@
     </div>
 </section>
 
-<!-- SCRIPT DE INTEGRAÇÃO AJAX / FETCH COM A API DO NGINX -->
+<!-- SCRIPT DE INTEGRAÇÃO COM A API DO SEU SERVIDOR / MULTIPASS -->
 <script>
     const form = document.getElementById('uploadForm');
     const statusBox = document.getElementById('statusBox');
@@ -551,10 +552,12 @@
     const downloadLink = document.getElementById('downloadLink');
     const btnSubmit = document.getElementById('btnSubmit');
 
+    // Substitua pela URL pública do seu servidor (ex: link do Ngrok ou IP público do Nginx)
+    const API_BASE_URL = "https://kissing-yiddish-pedometer.ngrok-free.dev -> http://localhost:80";
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Exibe o loading e desabilita o botão
         statusBox.style.display = 'block';
         downloadBox.style.display = 'none';
         btnSubmit.disabled = true;
@@ -570,8 +573,8 @@
         }
 
         try {
-            // O Nginx intercepta '/api/preencher-datasheet' e redireciona para a VM do Multipass
-            const response = await fetch('/api/preencher-datasheet', {
+            // Faz a requisição diretamente para o seu back-end (Nginx/Multipass)
+            const response = await fetch(`${API_BASE_URL}/api/preencher-datasheet`, {
                 method: 'POST',
                 body: formData
             });
@@ -583,8 +586,9 @@
             if (resultado.status === "sucesso") {
                 statusBox.style.display = 'none';
                 downloadBox.style.display = 'block';
-                // Define o link para o download do arquivo retornado pelo backend
-                downloadLink.href = resultado.download_url;
+                
+                // Garante que o link de download aponte para o domínio correto do back-end
+                downloadLink.href = `${API_BASE_URL}/api/download/${resultado.filename}`;
             } else {
                 throw new Error("Falha no processamento interno da planilha.");
             }
