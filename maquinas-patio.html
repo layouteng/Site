@@ -1,0 +1,224 @@
+<!-- ARQUIVO: maquinas-patio.html (Página Dedicada: Máquinas de Pátio - Layout Engenharia) -->
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máquinas de Pátio, Empilhadeiras e Recuperadoras | Layout Engenharia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#e53935', redDark: '#c62828', black: '#0d0d0d', darkGray: '#161616', lightGray: '#f4f6f8'
+                        }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 group">
+            <!-- Substitua 'Logo.jpg' pelo caminho correto da sua imagem do logo se necessário -->
+            <img src="Logo.jpg" alt="Logo Layout Engenharia" class="h-10 w-auto object-contain rounded-lg shadow-sm group-hover:opacity-90 transition-opacity">
+            <div class="text-xl font-black uppercase tracking-wider text-brand-black">
+            Layout <span class="text-brand-red">Engenharia</span>
+        </div>
+            </a>
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="text-xs font-bold uppercase tracking-wider text-gray-700 hover:text-brand-red">Início</a>
+                <a href="transportadores.html" class="text-xs font-bold uppercase tracking-wider text-gray-700 hover:text-brand-red">Transportadores</a>
+                <a href="maquinas-patio.html" class="text-xs font-bold uppercase tracking-wider text-brand-red">Máquinas de Pátio</a>
+                <a href="equipamentos.html" class="text-xs font-bold uppercase tracking-wider text-gray-700 hover:text-brand-red">Equipamentos</a>
+                <a href="index.html#contato" class="bg-brand-red text-white text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded shadow hover:bg-brand-redDark transition-all">Contato</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero da Solução -->
+    <section class="bg-brand-black text-white py-24 px-6 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20 bg-cover bg-center" style="background-image: url('recp.gif');"></div>
+        <div class="max-w-5xl mx-auto space-y-6 relative z-10">
+            <span class="bg-brand-red/20 border border-brand-red text-brand-red text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full inline-block">
+                Plano de Engenharia de Pátio & Terminais
+            </span>
+            <h1 class="text-4xl md:text-6xl font-black uppercase tracking-tight">
+                Máquinas de <span class="text-brand-red">Pátio</span>
+            </h1>
+            <p class="text-gray-300 text-lg max-w-3xl font-light leading-relaxed">
+                Plano completo focado no retrofit, balanceamento dinâmico estrutural e otimização de performance para <strong>empilhadeiras, recuperadoras e carregadores de navios (shiploaders)</strong> aplicados a minério de ferro, grãos e fertilizantes.
+            </p>
+        </div>
+    </section>
+
+    <!-- Seção 1: Objetivos de Retrofit e Performance -->
+    <section class="py-20 px-6 max-w-7xl mx-auto space-y-16">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+            <span class="text-brand-red font-bold text-xs uppercase tracking-widest bg-brand-red/10 px-3.5 py-1 rounded-full">Modernização Industrial</span>
+            <h2 class="text-3xl md:text-4xl font-black uppercase text-brand-black">Retrofit & Otimização Estrutural</h2>
+            <div class="w-20 h-1.5 bg-brand-red mx-auto rounded-full"></div>
+            <p class="text-gray-600">Extensão de vida útil e garantia de alta taxa de movimentação horária (t/h) em ambientes operacionais severos.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-brand-lightGray p-8 rounded-2xl border border-gray-200 flex flex-col justify-between hover:border-brand-red transition-all">
+                <div>
+                    <div class="w-12 h-12 bg-brand-red text-white rounded-xl flex items-center justify-center text-xl mb-6 shadow">
+                        <i class="fa-solid fa-sync"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-brand-black mb-2">Retrofit Completo de Ativos</h3>
+                    <p class="text-gray-600 text-sm">Atualização de painéis elétricos, cabines, sistemas de acionamento, automação e substituição de componentes obsoletos por tecnologia de ponta.</p>
+                </div>
+            </div>
+
+            <div class="bg-brand-lightGray p-8 rounded-2xl border border-gray-200 flex flex-col justify-between hover:border-brand-red transition-all">
+                <div>
+                    <div class="w-12 h-12 bg-brand-red text-white rounded-xl flex items-center justify-center text-xl mb-6 shadow">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-brand-black mb-2">Balanceamento Dinâmico</h3>
+                    <p class="text-gray-600 text-sm">Análise e correção de desbalanceamentos estruturais em superestruturas, lanças de giro (slewing) e sistemas de elevação (luffing).</p>
+                </div>
+            </div>
+
+            <div class="bg-brand-lightGray p-8 rounded-2xl border border-gray-200 flex flex-col justify-between hover:border-brand-red transition-all">
+                <div>
+                    <div class="w-12 h-12 bg-brand-red text-white rounded-xl flex items-center justify-center text-xl mb-6 shadow">
+                        <i class="fa-solid fa-cubes"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-brand-black mb-2">Minérios, Grãos & Fertilizantes</h3>
+                    <p class="text-gray-600 text-sm">Soluções específicas para o manuseio de minério de ferro altamente abrasivo, grãos e fertilizantes corrosivos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção 2: Simulações Computacionais e Análises (DEM & FEA) -->
+    <section class="py-20 bg-brand-black text-white px-6 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto space-y-12 relative z-10">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="bg-brand-red/20 border border-brand-red text-brand-red text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full inline-block">
+                    Engenharia Computacional Avançada
+                </span>
+                <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tight text-white">
+                    Simulações DEM e Análises Estruturais
+                </h2>
+                <div class="w-24 h-1.5 bg-brand-red mx-auto rounded-full"></div>
+                <p class="text-gray-400 text-base">Validação rigorosa de comportamento mecânico e fluxo de granéis por Elementos Discretos e Finitos.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-brand-red/20 text-brand-red rounded-lg flex items-center justify-center shrink-0 font-bold">01</div>
+                            <div>
+                                <h4 class="font-bold text-white">Análise DEM para Transferências</h4>
+                                <p class="text-gray-400 text-sm">Estudo detalhado do fluxo de minério de ferro, grãos e fertilizantes em calhas, moegas e correias. Elimina o desgaste prematuro por abrasão e mitiga a geração de pó.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-brand-red/20 text-brand-red rounded-lg flex items-center justify-center shrink-0 font-bold">02</div>
+                            <div>
+                                <h4 class="font-bold text-white">Cálculos Estáticos e Dinâmicos</h4>
+                                <p class="text-gray-400 text-sm">Avaliação completa de esforços mecânicos sob regime de trabalho contínuo, cargas de vento extremas e inércias de translação e giro de pórticos.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-brand-red/20 text-brand-red rounded-lg flex items-center justify-center shrink-0 font-bold">03</div>
+                            <div>
+                                <h4 class="font-bold text-white">Simulações de Deformações (FEA)</h4>
+                                <p class="text-gray-400 text-sm">Mapeamento de tensões e deformações em superestruturas treliçadas de grande porte, assegurando total conformidade com normas técnicas e fatores de segurança.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brand-darkGray p-8 rounded-2xl border border-white/10 shadow-2xl space-y-6">
+                    <h3 class="text-xl font-bold uppercase text-brand-red tracking-wide">Ativos Abrangidos</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        O plano de engenharia atende integralmente às principais máquinas de manuseio de pátio e terminais portuários:
+                    </p>
+                    <div class="space-y-3 text-sm font-medium">
+                        <div class="bg-white/5 p-3.5 rounded-lg border border-white/10 flex items-center justify-between">
+                            <span>Empilhadeiras (Stackers)</span>
+                            <i class="fa-solid fa-arrow-right text-brand-red"></i>
+                        </div>
+                        <div class="bg-white/5 p-3.5 rounded-lg border border-white/10 flex items-center justify-between">
+                            <span>Recuperadoras (Reclaimers)</span>
+                            <i class="fa-solid fa-arrow-right text-brand-red"></i>
+                        </div>
+                        <div class="bg-white/5 p-3.5 rounded-lg border border-white/10 flex items-center justify-between">
+                            <span>Carregadores de Navios (Shiploaders)</span>
+                            <i class="fa-solid fa-arrow-right text-brand-red"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção 3: Automação Inteligente, Scanners e Monitoramento Volumétrico -->
+    <section class="py-20 px-6 max-w-7xl mx-auto space-y-16">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+            <span class="text-brand-red font-bold text-xs uppercase tracking-widest bg-brand-red/10 px-3.5 py-1 rounded-full">Tecnologia Embarcada</span>
+            <h2 class="text-3xl md:text-4xl font-black uppercase text-brand-black">Automação, Scanners & Monitoramento</h2>
+            <div class="w-20 h-1.5 bg-brand-red mx-auto rounded-full"></div>
+            <p class="text-gray-600">Sistemas inteligentes para controle autônomo de pátios e escaneamento volumétrico em tempo real.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-brand-lightGray p-8 rounded-2xl border border-gray-200 flex flex-col justify-between hover:border-brand-red transition-all">
+                <div>
+                    <div class="w-12 h-12 bg-brand-red text-white rounded-xl flex items-center justify-center text-xl mb-6 shadow">
+                        <i class="fa-solid fa-gears"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-brand-black mb-2">Posicionamento Automático</h3>
+                    <p class="text-gray-600 text-sm">Controle automatizado de alta precisão para o ancinho de pilhas em recuperadoras, garantindo raspagem uniforme e segura.</p>
+                </div>
+            </div>
+
+            <div class="bg-brand-lightGray p-8 rounded-2xl border border-gray-200 flex flex-col justify-between hover:border-brand-red transition-all">
+                <div>
+                    <div class="w-12 h-12 bg-brand-red text-white rounded-xl flex items-center justify-center text-xl mb-6 shadow">
+                        <i class="fa-solid fa-laser-pointer"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-brand-black mb-2">Scanner de Pilhas</h3>
+                    <p class="text-gray-600 text-sm">Mapeamento tridimensional contínuo do formato, extensão e topografia das pilhas de estocagem no pátio.</p>
+                </div>
+            </div>
+
+            <div class="bg-brand-lightGray p-8 rounded-2xl border border-gray-200 flex flex-col justify-between hover:border-brand-red transition-all">
+                <div>
+                    <div class="w-12 h-12 bg-brand-red text-white rounded-xl flex items-center justify-center text-xl mb-6 shadow">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-brand-black mb-2">Monitoramento Volumétrico</h3>
+                    <p class="text-gray-600 text-sm">Cálculo em tempo real do volume de material estocado por meio de tecnologia de scanner, otimizando o planejamento logístico.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-black text-white/70 py-12 border-t-4 border-brand-red px-6 text-center">
+        <div class="max-w-7xl mx-auto space-y-3">
+            <div class="text-xl font-black uppercase tracking-wider text-white">
+                Layout <span class="text-brand-red">Engenharia</span>
+            </div>
+            <p class="text-sm">&copy; 2026 Layout Engenharia. Todos os direitos reservados. Soluções avançadas para máquinas de pátio.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

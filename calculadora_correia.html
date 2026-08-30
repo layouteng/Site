@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Diâmetro de Enrolamento de Correia</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #0284c7;
+            --primary-hover: #0369a1;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --border-color: #cbd5e1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            grid-column: 1 / -1;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            margin-top: 0;
+            color: #334155;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2);
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .results {
+            background-color: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .results p {
+            margin: 8px 0;
+            font-size: 0.95rem;
+        }
+
+        .warning {
+            color: #b45309;
+            background-color: #fef3c7;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .visual-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            background: #0f172a;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        canvas#canvasDiagram {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Calculadora de Diâmetro de Enrolamento de Correia</h1>
+
+        <div class="card">
+            <h2>Parâmetros de Entrada</h2>
+            <div class="form-group">
+                <label for="largura">Largura da correia (mm):</label>
+                <input type="number" id="largura" value="100" step="any">
+            </div>
+
+            <div class="form-group">
+                <label for="espessura">Espessura da correia (mm):</label>
+                <input type="number" id="espessura" value="10" step="any">
+            </div>
+
+            <div class="form-group">
+                <label for="comprimento">Comprimento total a enrolar (m):</label>
+                <input type="number" id="comprimento" value="500" step="any">
+            </div>
+
+            <div class="form-group">
+                <label for="peso_linear">Peso da correia (kg/m):</label>
+                <input type="number" id="peso_linear" value="2.5" step="any">
+            </div>
+
+            <div class="form-group">
+                <label for="diametro_inicial">Diâmetro inicial do tambor (mm) [Min: 610]:</label>
+                <input type="number" id="diametro_inicial" value="610" step="any">
+            </div>
+
+            <div class="form-group">
+                <label for="diametro_maximo">Diâmetro máximo da bobina (mm) (Opcional):</label>
+                <input type="number" id="diametro_maximo" placeholder="Deixe em branco para sem limite" step="any">
+            </div>
+
+            <button class="btn" onclick="calcular()">Calcular Enrolamento</button>
+
+            <div class="results" id="resultadosBox" style="display: none;">
+                <h2>Resultados do Cálculo</h2>
+                <div id="textoResultados"></div>
+                <div id="avisoBox" class="warning" style="display: none;"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Gráfico de Crescimento do Diâmetro</h2>
+            <div style="position: relative; height:250px; width:100%">
+                <canvas id="graficoCrescimento"></canvas>
+            </div>
+
+            <h2 style="margin-top: 30px;">Esquema Visual (Corte Transversal)</h2>
+            <div class="visual-container">
+                <canvas id="canvasDiagram" width="300" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let meuGrafico = null;
+
+        function calcular() {
+            // Coleta de valores
+            let largura = parseFloat(document.getElementById('largura').value) || 0;
+            let espessura = parseFloat(document.getElementById('espessura').value) || 0;
+            let comprimento_m = parseFloat(document.getElementById('comprimento').value) || 0;
+            let peso_linhear = parseFloat(document.getElementById('peso_linear').value) || 0;
+            let diametro_inicial = parseFloat(document.getElementById('diametro_inicial').value) || 610;
+
+            // Validação do diâmetro mínimo
+            if (diametro_inicial < 610) {
+                if (confirm(`O valor ${diametro_inicial} é menor que o mínimo recomendado (610mm). Deseja ajustar automaticamente para 610mm?`)) {
+                    diametro_inicial = 610.0;
+                    document.getElementById('diametro_inicial').value = 610.0;
+                } else {
+                    return;
+                }
+            }
+
+            let diametro_maximo_input = document.getElementById('diametro_maximo').value.trim();
+            let diametro_maximo = (diametro_maximo_input === "" || diametro_maximo_input === "0") ? null : parseFloat(diametro_maximo_input);
+
+            // Cálculos
+            let comprimento_mm = comprimento_m * 1000;
+            let area_correia = comprimento_mm * espessura;
+            let diametro_final_mm = Math.sqrt((Math.pow(diametro_inicial, 2)) + (4 * area_correia / Math.PI));
+            let peso_total_correia = comprimento_m * peso_linhear;
+
+            let quantidade_rolos = 1;
+            let peso_por_bobina = peso_total_correia;
+            let comprimento_real_por_rolo = comprimento_m;
+            let diametro_final_rolo = diametro_final_mm;
+
+            if (diametro_maximo && diametro_maximo < diametro_final_mm && diametro_maximo > diametro_inicial) {
+                let comprimento_maximo_por_rolo_mm = (Math.PI * (Math.pow(diametro_maximo, 2) - Math.pow(diametro_inicial, 2))) / 4;
+                let comprimento_maximo_por_rolo_m = comprimento_maximo_por_rolo_mm / 1000;
+                
+                let quantidade_rolos_estimada = Math.ceil(comprimento_m / comprimento_maximo_por_rolo_m);
+                comprimento_real_por_rolo = comprimento_m / quantidade_rolos_estimada;
+                
+                let area_rolo = comprimento_real_por_rolo * 1000 * espessura;
+                diametro_final_rolo = Math.sqrt((Math.pow(diametro_inicial, 2)) + (4 * area_rolo / Math.PI));
+
+                if (diametro_final_rolo > diametro_maximo) {
+                    quantidade_rolos_estimada += 1;
+                    comprimento_real_por_rolo = comprimento_m / quantidade_rolos_estimada;
+                    area_rolo = comprimento_real_por_rolo * 1000 * espessura;
+                    diametro_final_rolo = Math.sqrt((Math.pow(diametro_inicial, 2)) + (4 * area_rolo / Math.PI));
+                }
+
+                quantidade_rolos = quantidade_rolos_estimada;
+                peso_por_bobina = peso_total_correia / quantidade_rolos;
+            }
+
+            // Exibição dos Resultados
+            document.getElementById('resultadosBox').style.display = 'block';
+            let htmlResultados = `
+                <p><strong>1. Peso Total da Correia:</strong> ${peso_total_correia.toFixed(2)} kg</p>
+                <p><strong>2. Configuração do Enrolamento:</strong></p>
+                <ul style="margin: 5px 0 5px 20px; padding:0;">
+                    <li>Diâmetro Inicial (Tambor): ${diametro_inicial} mm</li>
+                    <li>Diâmetro Final da Bobina: ${diametro_final_rolo.toFixed(2)} mm</li>
+                    <li>Diâmetro Máximo Permitido: ${diametro_maximo ? diametro_maximo + ' mm' : 'Sem limite'}</li>
+                </ul>
+                <p><strong>3. Quantidade de Rolos:</strong> ${quantidade_rolos}</p>
+                <p><strong>4. Distribuição por Bobina:</strong></p>
+                <ul style="margin: 5px 0 5px 20px; padding:0;">
+                    <li>Comprimento por Bobina: ${comprimento_real_por_rolo.toFixed(2)} m</li>
+                    <li>Peso por Bobina: ${peso_por_bobina.toFixed(2)} kg</li>
+                </ul>
+            `;
+            document.getElementById('textoResultados').innerHTML = htmlResultados;
+
+            let avisoBox = document.getElementById('avisoBox');
+            if (diametro_maximo && diametro_final_rolo > diametro_maximo) {
+                avisoBox.style.display = 'block';
+                avisoBox.innerHTML = `⚠️ AVISO: O diâmetro final calculado excede o diâmetro máximo informado. Recomenda-se aumentar a quantidade de rolos.`;
+            } else {
+                avisoBox.style.display = 'none';
+            }
+
+            // Atualizar Gráfico de Crescimento
+            atualizarGrafico(diametro_inicial, espessura, comprimento_real_por_rolo);
+
+            // Desenhar Representação Visual
+            desenharDiagrama(diametro_inicial, diametro_final_rolo);
+        }
+
+        function atualizarGrafico(di, espessura, comprimento_total_m) {
+            let passos = 10;
+            let labels = [];
+            let dados = [];
+
+            for (let i = 0; i <= passos; i++) {
+                let comp_parcial_m = (comprimento_total_m / passos) * i;
+                let comp_parcial_mm = comp_parcial_m * 1000;
+                let area_parcial = comp_parcial_mm * espessura;
+                let d_parcial = Math.sqrt((Math.pow(di, 2)) + (4 * area_parcial / Math.PI));
+
+                labels.push(`${comp_parcial_m.toFixed(1)} m`);
+                dados.push(d_parcial.toFixed(2));
+            }
+
+            const ctx = document.getElementById('graficoCrescimento').getContext('2d');
+            
+            if (meuGrafico) {
+                meuGrafico.destroy();
+            }
+
+            meuGrafico = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Diâmetro da Bobina (mm)',
+                        data: dados,
+                        borderColor: '#0284c7',
+                        backgroundColor: 'rgba(2, 132, 199, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: { display: true, text: 'Diâmetro (mm)' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Comprimento Enrolado' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function desenharDiagrama(di, df) {
+            const canvas = document.getElementById('canvasDiagram');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            let centerX = canvas.width / 2;
+            let centerY = canvas.height / 2;
+            
+            // Fator de escala para caber no canvas (max raio ~ 100px)
+            let maxRaioVisual = 100;
+            let escala = maxRaioVisual / (df / 2);
+
+            let raioExternoVisual = (df / 2) * escala;
+            let raioInternoVisual = (di / 2) * escala;
+
+            // Desenhar Bobina (Camadas externas)
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, raioExternoVisual, 0, 2 * Math.PI);
+            ctx.fillStyle = '#38bdf8';
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#0284c7';
+            ctx.stroke();
+
+            // Desenhar Tambor (Miolo central vazio/preenchido)
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, raioInternoVisual, 0, 2 * Math.PI);
+            ctx.fillStyle = '#1e293b';
+            ctx.fill();
+            ctx.strokeStyle = '#64748b';
+            ctx.stroke();
+
+            // Legenda no Canvas
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '11px sans-serif';
+            ctx.fillText(`Di: ${di} mm`, 10, 20);
+            ctx.fillText(`Df: ${df.toFixed(0)} mm`, 10, 38);
+        }
+
+        // Executar cálculo inicial ao carregar a página
+        window.onload = function() {
+            calcular();
+        };
+    </script>
+</body>
+</html>

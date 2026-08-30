@@ -1,0 +1,188 @@
+<!-- ARQUIVO: transportadores.html (Página Dedicada: Transportadores de Correia - Layout Engenharia) -->
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transportadores de Correia & Retrofit ATS | Layout Engenharia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#e53935', redDark: '#c62828', black: '#0d0d0d', darkGray: '#161616', lightGray: '#f4f6f8'
+                        }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <!-- Substitua 'Logo.jpg' pelo caminho correto da sua imagem do logo se necessário -->
+                <img src="Logo.jpg" alt="Logo Layout Engenharia" class="h-10 w-auto object-contain rounded-lg shadow-sm group-hover:opacity-90 transition-opacity">
+                <div class="text-xl font-black uppercase tracking-wider text-brand-black">
+                Layout <span class="text-brand-red">Engenharia</span>
+                </div>
+            </a>
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="text-xs font-bold uppercase tracking-wider text-gray-700 hover:text-brand-red">Início</a>
+                <a href="transportadores.html" class="text-xs font-bold uppercase tracking-wider text-brand-red">Transportadores</a>
+                <a href="maquinas-patio.html" class="text-xs font-bold uppercase tracking-wider text-gray-700 hover:text-brand-red">Máquinas de Pátio</a>
+                <a href="equipamentos.html" class="text-xs font-bold uppercase tracking-wider text-gray-700 hover:text-brand-red">Equipamentos</a>
+                <a href="index.html#contato" class="bg-brand-red text-white text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded shadow hover:bg-brand-redDark transition-all">Contato</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero da Solução -->
+    <section class="bg-brand-black text-white py-24 px-6 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20 bg-cover bg-center" style="background-image: url('transp.jpg');"></div>
+        <div class="max-w-5xl mx-auto space-y-6 relative z-10">
+            <span class="bg-brand-red/20 border border-brand-red text-brand-red text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full inline-block">
+                Plano de Engenharia & Soluções Avançadas
+            </span>
+            <h1 class="text-4xl md:text-6xl font-black uppercase tracking-tight">
+                Transportadores de <span class="text-brand-red">Correia</span>
+            </h1>
+            <p class="text-gray-300 text-lg max-w-3xl font-light leading-relaxed">
+                Plano completo de engenharia voltado para os setores de <strong>mineração, portuário, grãos e fertilizantes</strong>, focado na revitalização de ativos, confiabilidade, aumento da disponibilidade e redução de custos operacionais (OPEX/CAPEX).
+            </p>
+        </div>
+    </section>
+
+    <!-- Seção 1: Escopo de Serviços e Atuação Setorial -->
+    <section class="py-20 px-6 max-w-7xl mx-auto space-y-16">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+            <span class="text-brand-red font-bold text-xs uppercase tracking-widest bg-brand-red/10 px-3.5 py-1 rounded-full">Excelência Operacional</span>
+            <h2 class="text-3xl md:text-4xl font-black uppercase text-brand-black">Serviços e Foco Setorial</h2>
+            <div class="w-20 h-1.5 bg-brand-red mx-auto rounded-full"></div>
+            <p class="text-gray-600">Atuação especializada para elevar o desempenho de linhas de transporte de longa distância em ambientes severos.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="bg-brand-lightGray p-8 rounded-2xl border border-gray-200 flex flex-col justify-between hover:border-brand-red transition-all">
+                <div>
+                    <div class="w-12 h-12 bg-brand-red text-white rounded-xl flex items-center justify-center text-xl mb-6 shadow">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-brand-black mb-2">Revitalização & Manutenção</h3>
+                    <p class="text-gray-600 text-sm">Reforma estrutural de treliças, galerias e melhoria contínua de rotinas de manutenção preventiva e preditiva.</p>
+                </div>
+            </div>
+
+            <div class="bg-brand-lightGray p-8 rounded-2xl border border-gray-200 flex flex-col justify-between hover:border-brand-red transition-all">
+                <div>
+                    <div class="w-12 h-12 bg-brand-red text-white rounded-xl flex items-center justify-center text-xl mb-6 shadow">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-brand-black mb-2">Disponibilidade & Custo</h3>
+                    <p class="text-gray-600 text-sm">Aumento do uptime operacional e redução drástica de intervenções corretivas emergenciais e custos globais.</p>
+                </div>
+            </div>
+
+            <div class="bg-brand-lightGray p-8 rounded-2xl border border-gray-200 flex flex-col justify-between hover:border-brand-red transition-all">
+                <div>
+                    <div class="w-12 h-12 bg-brand-red text-white rounded-xl flex items-center justify-center text-xl mb-6 shadow">
+                        <i class="fa-solid fa-cube"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-brand-black mb-2">Análise DEM & Simulações</h3>
+                    <p class="text-gray-600 text-sm">Estudo de fluxo de granulosos em chutes e correias via Método dos Elementos Discretos para eliminar desgaste e poeira.</p>
+                </div>
+            </div>
+
+            <div class="bg-brand-lightGray p-8 rounded-2xl border border-gray-200 flex flex-col justify-between hover:border-brand-red transition-all">
+                <div>
+                    <div class="w-12 h-12 bg-brand-red text-white rounded-xl flex items-center justify-center text-xl mb-6 shadow">
+                        <i class="fa-solid fa-ship"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-brand-black mb-2">Mineração, Portos & Agro</h3>
+                    <p class="text-gray-600 text-sm">Atendimento focado em minério de ferro, terminais portuários, fluxo de grãos e fertilizantes altamente corrosivos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção 2: O Retrofit Inovador (Sistema ATS) -->
+    <section class="py-20 bg-brand-black text-white px-6 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto space-y-12 relative z-10">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="bg-brand-red/20 border border-brand-red text-brand-red text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full inline-block">
+                    Inovação Tecnológica
+                </span>
+                <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tight text-white">
+                    Retrofit: Sistema de Esticamento Automático (ATS)
+                </h2>
+                <div class="w-24 h-1.5 bg-brand-red mx-auto rounded-full"></div>
+                <p class="text-gray-400 text-base">Substituição do contrapeso convencional por tecnologia inteligente de alta precisão dinâmica.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <p class="text-gray-300 leading-relaxed">
+                        O projeto de modernização da Layout Engenharia substitui os pesados e oscilantes contrapesos tradicionais por um <strong>sistema de esticamento automático de correia transportadora (ATS)</strong> de alta performance. 
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-brand-red/20 text-brand-red rounded-lg flex items-center justify-center shrink-0 font-bold">01</div>
+                            <div>
+                                <h4 class="font-bold text-white">Arquitetura Compacta com Redutor Planetário</h4>
+                                <p class="text-gray-400 text-sm">Composto por um guincho com redutor planetário acoplado <strong>internamente no tambor</strong>, otimizando o espaço físico e maximizando a segurança mecânica.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-brand-red/20 text-brand-red rounded-lg flex items-center justify-center shrink-0 font-bold">02</div>
+                            <div>
+                                <h4 class="font-bold text-white">Monitoramento de Tensão Dinâmico</h4>
+                                <p class="text-gray-400 text-sm">Sistema inteligente que monitora a tensão da correia em tempo real, atuando conforme a demanda operacional do transportador (partidas, frenagens, vazio ou carga plena).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brand-darkGray p-8 rounded-2xl border border-white/10 shadow-2xl space-y-6">
+                    <h3 class="text-xl font-bold uppercase text-brand-red tracking-wide">Aumento Exponencial da Vida Útil</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Ao eliminar oscilações e garantir a tração ideal sem escorregamento no tambor motriz, o sistema preserva integralmente os componentes vitais do transportador:
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 text-sm font-medium">
+                        <div class="bg-white/5 p-3.5 rounded-lg border border-white/10 flex items-center gap-3">
+                            <i class="fa-solid fa-check text-brand-red"></i> Correia Transportadora
+                        </div>
+                        <div class="bg-white/5 p-3.5 rounded-lg border border-white/10 flex items-center gap-3">
+                            <i class="fa-solid fa-check text-brand-red"></i> Roletes e Suportes
+                        </div>
+                        <div class="bg-white/5 p-3.5 rounded-lg border border-white/10 flex items-center gap-3">
+                            <i class="fa-solid fa-check text-brand-red"></i> Tambores Motrizes
+                        </div>
+                        <div class="bg-white/5 p-3.5 rounded-lg border border-white/10 flex items-center gap-3">
+                            <i class="fa-solid fa-check text-brand-red"></i> Revestimentos
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-black text-white/70 py-12 border-t-4 border-brand-red px-6 text-center">
+        <div class="max-w-7xl mx-auto space-y-3">
+            <div class="text-xl font-black uppercase tracking-wider text-white">
+                Layout <span class="text-brand-red">Engenharia</span>
+            </div>
+            <p class="text-sm">&copy; 2026 Layout Engenharia. Todos os direitos reservados. Soluções avançadas em transporte de granéis.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout Engenharia | Soluções Avançadas em Mineração e Movimentação de Granéis</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#e53935',
+                            redDark: '#c62828',
+                            black: '#0d0d0d',
+                            darkGray: '#161616',
+                            cardGray: '#1f1f1f',
+                            lightGray: '#f4f6f8',
+                            borderGray: '#e2e8f0'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Segoe UI', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800 antialiased overflow-x-hidden">
+
+    <!-- Top Bar de Informações Rápidas -->
+    <div class="bg-brand-black text-gray-400 text-xs py-2 px-6 border-b border-white/10 hidden md:block">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <span><i class="fa-solid fa-location-dot text-brand-red mr-2"></i> Savassi, Belo Horizonte - MG</span>
+                <span><i class="fa-solid fa-phone text-brand-red mr-2"></i> (31) 99607-4838</span>
+                <span><i class="fa-solid fa-envelope text-brand-red mr-2"></i> layout@layouteng.com</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="text-white font-semibold">Certificação ISO & Alta Confiabilidade</span>
+                <a href="https://linkedin.com/company/layout-engenharia" target="_blank" class="hover:text-brand-red transition-colors"><i class="fa-brands fa-linkedin-in text-sm"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header id="header" class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 transition-all duration-300 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-3 group">
+            <!-- Substitua 'Logo.jpg' pelo caminho correto da sua imagem do logo se necessário -->
+            <img src="Logo.jpg" alt="Logo Layout Engenharia" class="h-10 w-auto object-contain rounded-lg shadow-sm group-hover:opacity-90 transition-opacity">
+            <div class="text-xl font-black uppercase tracking-wider text-brand-black">
+            Layout <span class="text-brand-red">Engenharia</span>
+        </div>
+            </a>
+
+            <!-- Navegação Desktop -->
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="#home" class="text-xs font-bold uppercase tracking-wider text-gray-700 hover:text-brand-red transition-colors">Início</a>
+                <a href="#servicos" class="text-xs font-bold uppercase tracking-wider text-gray-700 hover:text-brand-red transition-colors">Soluções</a>
+                <a href="#calculadoras" class="text-xs font-bold uppercase tracking-wider text-gray-700 hover:text-brand-red transition-colors">Simuladores</a>
+                <a href="#sobre" class="text-xs font-bold uppercase tracking-wider text-gray-700 hover:text-brand-red transition-colors">A Empresa</a>
+                <a href="#contato" class="text-xs font-bold uppercase tracking-wider text-gray-700 hover:text-brand-red transition-colors">Contato</a>
+                <a href="#calculadoras" class="bg-brand-red text-white text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded hover:bg-brand-redDark transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                    Área Técnica
+                </a>
+            </nav>
+
+            <!-- Botão Menu Mobile -->
+            <button id="menu-btn" class="md:hidden text-brand-black text-2xl focus:outline-none" onclick="toggleMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Menu Mobile Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white border-b border-gray-200 shadow-2xl py-6 px-8 flex flex-col gap-4">
+            <a href="#home" class="mobile-link text-sm font-bold uppercase text-brand-black hover:text-brand-red">Início</a>
+            <a href="#servicos" class="mobile-link text-sm font-bold uppercase text-brand-black hover:text-brand-red">Soluções</a>
+            <a href="#calculadoras" class="mobile-link text-sm font-bold uppercase text-brand-black hover:text-brand-red">Simuladores</a>
+            <a href="#sobre" class="mobile-link text-sm font-bold uppercase text-brand-black hover:text-brand-red">A Empresa</a>
+            <a href="#contato" class="mobile-link text-sm font-bold uppercase text-brand-black hover:text-brand-red">Contato</a>
+            <a href="#calculadoras" class="bg-brand-red text-white text-center text-sm font-bold uppercase py-3 rounded shadow">Área Técnica</a>
+        </div>
+    </header>
+
+    <!-- Hero Section Imersiva -->
+    <section id="home" class="relative min-h-[90vh] flex items-center justify-center bg-brand-black text-white px-6 py-20 overflow-hidden">
+        <div class="absolute inset-0 z-0 opacity-200 bg-cover bg-center mix-blend-overlay" style="background-image: url('recp.gif');"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/70 to-transparent z-0"></div>
+        <div class="absolute inset-0 bg-grid-pattern opacity-20 z-0"></div>
+        
+        <div class="relative z-10 max-w-5xl text-center space-y-8">
+            <div class="inline-flex items-center gap-2 bg-brand-red/10 border border-brand-red/40 text-brand-red text-xs font-extrabold uppercase tracking-widest px-4 py-2 rounded-full backdrop-blur-sm">
+                <i class="fa-solid fa-gears animate-spin"></i> Engenharia Mecânica e Automação de Alta Performance
+            </div>
+            
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight leading-none">
+                Soluções Avançadas em <span class="text-brand-red underline decoration-brand-red/50 decoration-4">Mineração</span>
+            </h1>
+            
+            <p class="text-lg md:text-2xl text-gray-300 font-light max-w-3xl mx-auto leading-relaxed">
+                Desenvolvimento de projetos estruturais robustos, transportadores de correia, empilhadeiras, alimentadores e eficiência milimétrica para o setor mineral.
+            </p>
+            
+            <div class="pt-4 flex flex-col sm:flex-row justify-center gap-5">
+                <a href="#servicos" class="bg-brand-red hover:bg-brand-redDark text-white font-bold uppercase tracking-wider px-8 py-4 rounded transition-all shadow-xl hover:-translate-y-1 text-sm flex items-center justify-center gap-3">
+                    <span>Nossas Soluções</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <a href="#calculadoras" class="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold uppercase tracking-wider px-8 py-4 rounded transition-all text-sm flex items-center justify-center gap-3">
+                    <span>Acessar Simuladores</span>
+                    <i class="fa-solid fa-calculator"></i>
+                </a>
+            </div>
+
+            <!-- Mini Estatísticas Destacadas -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6 pt-12 max-w-3xl mx-auto border-t border-white/10 text-left">
+                <div class="p-4 bg-white/5 rounded-lg border border-white/10 backdrop-blur-sm">
+                    <p class="text-3xl font-black text-brand-red">+15 Anos</p>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider mt-1">De Experiência no Setor</p>
+                </div>
+                <div class="p-4 bg-white/5 rounded-lg border border-white/10 backdrop-blur-sm">
+                    <p class="text-3xl font-black text-brand-red">100%</p>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider mt-1">Confiabilidade Operacional</p>
+                </div>
+                <div class="col-span-2 md:col-span-1 p-4 bg-white/5 rounded-lg border border-white/10 backdrop-blur-sm">
+                    <p class="text-3xl font-black text-brand-red">ISO</p>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider mt-1">Padrões Internacionais</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Serviços / Especialidades (Com links atualizados para as páginas dedicadas) -->
+    <section id="servicos" class="py-24 px-6 bg-brand-lightGray">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                <span class="text-brand-red font-bold text-xs uppercase tracking-widest bg-brand-red/10 px-3.5 py-1 rounded-full">Portfólio Técnico</span>
+                <h2 class="text-3xl md:text-5xl font-black uppercase text-brand-black tracking-tight">Nossas Especialidades</h2>
+                <div class="w-24 h-1.5 bg-brand-red mx-auto rounded-full"></div>
+                <p class="text-gray-600 text-sm md:text-base">Tecnologia de ponta e engenharia consultiva aplicada a toda a cadeia de movimentação, britagem e processamento de materiais.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1: Transportadores -->
+                <a href="transportadores.html" class="bg-white p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 border-t-4 border-brand-black hover:border-brand-red group flex flex-col justify-between transform hover:-translate-y-1.5 block">
+                    <div>
+                        <div class="w-16 h-16 bg-brand-lightGray text-brand-red rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-red group-hover:text-white transition-all shadow-inner">
+                            <i class="fa-solid fa-gears"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-black mb-3">Transportadores de Correia</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Projetos sob medida, simulações DEM, retrofit de esticamento automático (ATS) e máxima eficiência energética para longas distâncias.</p>
+                    </div>
+                    <div class="mt-8 pt-4 border-t border-gray-100 flex items-center justify-between">
+                        <span class="text-xs font-bold text-brand-red uppercase tracking-wide">Acessar Página</span>
+                        <i class="fa-solid fa-arrow-right text-xs text-brand-red group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+
+                <!-- Card 2: Máquinas de Pátio -->
+                <a href="maquinas-patio.html" class="bg-white p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 border-t-4 border-brand-black hover:border-brand-red group flex flex-col justify-between transform hover:-translate-y-1.5 block">
+                    <div>
+                        <div class="w-16 h-16 bg-brand-lightGray text-brand-red rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-red group-hover:text-white transition-all shadow-inner">
+                            <i class="fa-solid fa-truck-ramp-box"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-black mb-3">Máquinas de Pátio</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Empilhadeiras, recuperadoras e carregadores de navios otimizados por balanceamento estrutural, scanners 3D e automação autônoma.</p>
+                    </div>
+                    <div class="mt-8 pt-4 border-t border-gray-100 flex items-center justify-between">
+                        <span class="text-xs font-bold text-brand-red uppercase tracking-wide">Acessar Página</span>
+                        <i class="fa-solid fa-arrow-right text-xs text-brand-red group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+
+                <!-- Card 3: Equipamentos em Geral -->
+                <a href="equipamentos.html" class="bg-white p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 border-t-4 border-brand-black hover:border-brand-red group flex flex-col justify-between transform hover:-translate-y-1.5 block">
+                    <div>
+                        <div class="w-16 h-16 bg-brand-lightGray text-brand-red rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-red group-hover:text-white transition-all shadow-inner">
+                            <i class="fa-solid fa-helmet-safety"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-black mb-3">Equipamentos de Mineração</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Equipamentos pesados focados em mineração, portos e agropecuária com escaneamento 3D, análises FEM e otimização de produção.</p>
+                    </div>
+                    <div class="mt-8 pt-4 border-t border-gray-100 flex items-center justify-between">
+                        <span class="text-xs font-bold text-brand-red uppercase tracking-wide">Acessar Página</span>
+                        <i class="fa-solid fa-arrow-right text-xs text-brand-red group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Área de Ferramentas / Simuladores Dinâmicos -->
+    <section id="calculadoras" class="py-24 bg-brand-black text-white px-6 relative overflow-hidden">
+        <div class="absolute inset-0 bg-grid-pattern opacity-10 z-0"></div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center max-w-2xl mx-auto mb-14 space-y-3">
+                <span class="text-brand-red font-bold text-xs uppercase tracking-widest bg-brand-red/20 px-3.5 py-1 rounded-full border border-brand-red/30">Ambiente de Engenharia</span>
+                <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tight text-white">Central de Simuladores</h2>
+                <div class="w-24 h-1.5 bg-brand-red mx-auto rounded-full"></div>
+                <p class="text-gray-400 text-sm md:text-base">Selecione abaixo a ferramenta de engenharia desejada para cálculos, dimensionamento rápido e validação de parâmetros.</p>
+            </div>
+
+            <!-- Abas de Navegação das Ferramentas -->
+            <div class="flex flex-wrap justify-center gap-3 mb-10">
+                <button onclick="switchTab(0)" id="tab-btn-0" class="tab-btn px-6 py-3.5 rounded-lg font-bold text-xs uppercase tracking-wider transition-all bg-brand-red text-white shadow-lg flex items-center gap-2">
+                    <i class="fa-solid fa-arrows-split-up-and-left"></i> Transportador de Correia
+                </button>
+                <button onclick="switchTab(1)" id="tab-btn-1" class="tab-btn px-6 py-3.5 rounded-lg font-bold text-xs uppercase tracking-wider transition-all bg-white/10 text-gray-300 hover:bg-white/20 border border-white/10 flex items-center gap-2">
+                    <i class="fa-solid fa-gauge-high"></i> Tensionador Automático (ATS)
+                </button>
+                <button onclick="switchTab(2)" id="tab-btn-2" class="tab-btn px-6 py-3.5 rounded-lg font-bold text-xs uppercase tracking-wider transition-all bg-white/10 text-gray-300 hover:bg-white/20 border border-white/10 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-notch"></i> Bobinamento de Correia
+                </button>
+            </div>
+
+            <!-- Containers dos iframes / Simuladores -->
+            <div class="bg-brand-darkGray rounded-2xl p-4 md:p-8 border border-white/15 shadow-2xl backdrop-blur-md">
+                <div id="tab-content-0" class="tab-pane">
+                    <iframe src="CalculoTR.html" width="100%" height="1200px" class="rounded-xl border-0 bg-white shadow-inner"></iframe>
+                </div>
+                <div id="tab-content-1" class="tab-pane hidden">
+                    <iframe src="Calculo_guincho.html" width="100%" height="1200px" class="rounded-xl border-0 bg-white shadow-inner"></iframe>
+                </div>
+                <div id="tab-content-2" class="tab-pane hidden">
+                    <iframe src="calculadora_correia.html" width="100%" height="1200px" class="rounded-xl border-0 bg-white shadow-inner"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre a Empresa -->
+    <section id="sobre" class="py-24 px-6 bg-white">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+            <div class="w-full lg:w-1/2 space-y-6">
+                <span class="text-brand-red font-bold text-xs uppercase tracking-widest bg-brand-red/10 px-3.5 py-1 rounded-full">Sobre a Layout Engenharia</span>
+                <h2 class="text-3xl md:text-5xl font-black uppercase text-brand-black tracking-tight leading-tight">Tradição e Inovação em Engenharia Industrial</h2>
+                <p class="text-gray-600 leading-relaxed text-base">
+                    A Layout Engenharia destaca-se no mercado nacional pelo alto rigor técnico na concepção e execução de projetos para o setor mineral e de movimentação de granéis. Unimos uma equipe multidisciplinar altamente experiente com ferramentas analíticas e computacionais de última geração.
+                </p>
+                <div class="grid grid-cols-2 gap-6 pt-4">
+                    <div class="border-l-4 border-brand-red pl-5 bg-brand-lightGray/60 p-4 rounded-r-xl">
+                        <h4 class="text-3xl font-black text-brand-black">+15 Anos</h4>
+                        <p class="text-xs text-gray-500 uppercase tracking-wider font-semibold mt-1">De Experiência Sólida</p>
+                    </div>
+                    <div class="border-l-4 border-brand-red pl-5 bg-brand-lightGray/60 p-4 rounded-r-xl">
+                        <h4 class="text-3xl font-black text-brand-black">100%</h4>
+                        <p class="text-xs text-gray-500 uppercase tracking-wider font-semibold mt-1">Foco em Resultados</p>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full lg:w-1/2 relative">
+                <div class="relative h-[440px] rounded-2xl overflow-hidden shadow-2xl border-4 border-brand-black group">
+                    <div class="absolute inset-0 bg-cover bg-center transform group-hover:scale-105 transition-transform duration-700" style="background-image: url('transp.jpg');"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-black/60 to-transparent"></div>
+                </div>
+                <div class="absolute -bottom-8 -right-6 bg-brand-red text-white p-6 rounded-2xl shadow-2xl hidden sm:flex flex-col items-center border-4 border-white">
+                    <p class="text-4xl font-black">ISO</p>
+                    <p class="text-xs uppercase tracking-widest font-bold mt-1">Qualidade Superior</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato & Mapa -->
+    <section id="contato" class="py-24 px-6 bg-brand-lightGray border-t border-gray-200">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                <span class="text-brand-red font-bold text-xs uppercase tracking-widest bg-brand-red/10 px-3.5 py-1 rounded-full">Atendimento Comercial</span>
+                <h2 class="text-3xl md:text-5xl font-black uppercase text-brand-black tracking-tight">Fale Conosco</h2>
+                <div class="w-24 h-1.5 bg-brand-red mx-auto rounded-full"></div>
+                <p class="text-gray-600">Nossa equipe de engenheiros está pronta para atender o seu próximo projeto de grande porte.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Informações de Contato e Mapa -->
+                <div class="space-y-6">
+                    <div class="bg-white p-8 rounded-2xl shadow-md space-y-6 border border-gray-100">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-brand-red/10 text-brand-red rounded-xl flex items-center justify-center shrink-0 text-lg">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-brand-black">Telefone / WhatsApp</h4>
+                                <p class="text-gray-600 text-sm mt-0.5">(31) 99607-4838</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-brand-red/10 text-brand-red rounded-xl flex items-center justify-center shrink-0 text-lg">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-brand-black">Email Corporativo</h4>
+                                <p class="text-gray-600 text-sm mt-0.5">layout@layouteng.com.br</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-brand-red/10 text-brand-red rounded-xl flex items-center justify-center shrink-0 text-lg">
+                                <i class="fa-brands fa-linkedin-in"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-brand-black">LinkedIn</h4>
+                                <p class="text-gray-600 text-sm mt-0.5">linkedin.com/company/layout-engenharia</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mapa Incorporado -->
+                    <div class="rounded-2xl overflow-hidden shadow-md h-72 border border-gray-200">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3751.366663579856!2d-43.93668992365098!3d-19.93997398135896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa69088b5555555%3A0x123456789abcdef!2sR.%20Prof.%20Moraes%2C%20562%20-%20Savassi%2C%20Belo%20Horizonte%20-%20MG%2C%2030150-370!5e0!3m2!1spt-BR!2sbr!4v1721500000000!5m2!1spt-BR!2sbr" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Formulário Interativo -->
+                <div class="bg-white p-8 md:p-10 rounded-2xl shadow-md border border-gray-100 flex flex-col justify-center">
+                    <form onsubmit="event.preventDefault(); alert('Mensagem enviada com sucesso para a Layout Engenharia!');" class="space-y-5">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">Seu Nome</label>
+                            <input type="text" placeholder="Ex: João da Silva" required class="w-full px-4.5 py-3.5 border border-gray-300 rounded-lg focus:border-brand-red focus:ring-1 focus:ring-brand-red focus:outline-none transition-all text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">Email Corporativo</label>
+                            <input type="email" placeholder="nome@empresa.com" required class="w-full px-4.5 py-3.5 border border-gray-300 rounded-lg focus:border-brand-red focus:ring-1 focus:ring-brand-red focus:outline-none transition-all text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">Assunto</label>
+                            <input type="text" placeholder="Descreva o assunto principal" required class="w-full px-4.5 py-3.5 border border-gray-300 rounded-lg focus:border-brand-red focus:ring-1 focus:ring-brand-red focus:outline-none transition-all text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">Mensagem</label>
+                            <textarea rows="4" placeholder="Como podemos ajudar no seu projeto de engenharia?" required class="w-full px-4.5 py-3.5 border border-gray-300 rounded-lg focus:border-brand-red focus:ring-1 focus:ring-brand-red focus:outline-none transition-all text-sm"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-brand-red hover:bg-brand-redDark text-white font-bold uppercase tracking-wider py-4 rounded-lg transition-all shadow-lg hover:shadow-xl text-sm transform hover:-translate-y-0.5">
+                            Enviar Solicitação
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-black text-white/70 py-14 border-t-4 border-brand-red px-6">
+        <div class="max-w-7xl mx-auto flex flex-col items-center gap-6 text-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-brand-red text-white p-2 rounded-lg shadow">
+                    <i class="fa-solid fa-industry text-lg"></i>
+                </div>
+                <div class="text-2xl font-black uppercase tracking-wider text-white">
+                    Layout <span class="text-brand-red">Engenharia</span>
+                </div>
+            </div>
+            <p class="text-sm max-w-md">&copy; 2026 Layout Engenharia. Todos os direitos reservados. Soluções estruturais e automação para mineração.</p>
+            <div class="w-16 h-0.5 bg-white/20"></div>
+            <p class="text-xs text-white/40 uppercase tracking-widest font-semibold">Excelência e Inovação em Mineração</p>
+        </div>
+    </footer>
+
+    <!-- Scripts de Interatividade -->
+    <script>
+        // Toggle Menu Mobile
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Fechar menu mobile ao clicar em um link
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Alternância de Abas na Seção de Simuladores
+        function switchTab(index) {
+            const panes = document.querySelectorAll('.tab-pane');
+            const buttons = document.querySelectorAll('.tab-btn');
+
+            panes.forEach((pane, i) => {
+                if (i === index) {
+                    pane.classList.remove('hidden');
+                } else {
+                    pane.classList.add('hidden');
+                }
+            });
+
+            buttons.forEach((btn, i) => {
+                if (i === index) {
+                    btn.classList.remove('bg-white/10', 'text-gray-300', 'border', 'border-white/10');
+                    btn.classList.add('bg-brand-red', 'text-white', 'shadow-lg');
+                } else {
+                    btn.classList.remove('bg-brand-red', 'text-white', 'shadow-lg');
+                    btn.classList.add('bg-white/10', 'text-gray-300', 'border', 'border-white/10');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
