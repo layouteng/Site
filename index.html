@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Layout Engenharia | Soluções Avançadas em Mineração e Movimentação de Granéis</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -28,9 +27,9 @@
             }
         }
     </script>
-    <!-- Google Fonts & FontAwesome -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
         .bg-grid-pattern {
@@ -41,7 +40,6 @@
 </head>
 <body class="bg-white text-gray-800 antialiased overflow-x-hidden">
 
-    <!-- Top Bar de Informações Rápidas -->
     <div class="bg-brand-black text-gray-400 text-xs py-2 px-6 border-b border-white/10 hidden md:block">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-6">
@@ -56,22 +54,19 @@
         </div>
     </div>
 
-    <!-- Header / Navbar -->
     <header id="header" class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 transition-all duration-300 shadow-sm">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <!-- Logo -->
             <a href="index.html" class="flex items-center gap-3 group">
-            <!-- Substitua 'Logo.jpg' pelo caminho correto da sua imagem do logo se necessário -->
-            <img src="Logo.jpg" alt="Logo Layout Engenharia" class="h-10 w-auto object-contain rounded-lg shadow-sm group-hover:opacity-90 transition-opacity">
-            <div class="text-xl font-black uppercase tracking-wider text-brand-black">
-            Layout <span class="text-brand-red">Engenharia</span>
-        </div>
+                <img src="Logo.jpg" alt="Logo Layout Engenharia" class="h-10 w-auto object-contain rounded-lg shadow-sm group-hover:opacity-90 transition-opacity">
+                <div class="text-xl font-black uppercase tracking-wider text-brand-black">
+                    Layout <span class="text-brand-red">Engenharia</span>
+                </div>
             </a>
 
-            <!-- Navegação Desktop -->
             <nav class="hidden md:flex items-center gap-8">
                 <a href="#home" class="text-xs font-bold uppercase tracking-wider text-gray-700 hover:text-brand-red transition-colors">Início</a>
                 <a href="#servicos" class="text-xs font-bold uppercase tracking-wider text-gray-700 hover:text-brand-red transition-colors">Soluções</a>
+                <a href="#estudo-caso" class="text-xs font-bold uppercase tracking-wider text-gray-700 hover:text-brand-red transition-colors">Estudo de Caso TAC</a>
                 <a href="#calculadoras" class="text-xs font-bold uppercase tracking-wider text-gray-700 hover:text-brand-red transition-colors">Simuladores</a>
                 <a href="#sobre" class="text-xs font-bold uppercase tracking-wider text-gray-700 hover:text-brand-red transition-colors">A Empresa</a>
                 <a href="#contato" class="text-xs font-bold uppercase tracking-wider text-gray-700 hover:text-brand-red transition-colors">Contato</a>
@@ -80,16 +75,15 @@
                 </a>
             </nav>
 
-            <!-- Botão Menu Mobile -->
             <button id="menu-btn" class="md:hidden text-brand-black text-2xl focus:outline-none" onclick="toggleMenu()">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>
 
-        <!-- Menu Mobile Drawer -->
         <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white border-b border-gray-200 shadow-2xl py-6 px-8 flex flex-col gap-4">
             <a href="#home" class="mobile-link text-sm font-bold uppercase text-brand-black hover:text-brand-red">Início</a>
             <a href="#servicos" class="mobile-link text-sm font-bold uppercase text-brand-black hover:text-brand-red">Soluções</a>
+            <a href="#estudo-caso" class="mobile-link text-sm font-bold uppercase text-brand-black hover:text-brand-red">Estudo de Caso TAC</a>
             <a href="#calculadoras" class="mobile-link text-sm font-bold uppercase text-brand-black hover:text-brand-red">Simuladores</a>
             <a href="#sobre" class="mobile-link text-sm font-bold uppercase text-brand-black hover:text-brand-red">A Empresa</a>
             <a href="#contato" class="mobile-link text-sm font-bold uppercase text-brand-black hover:text-brand-red">Contato</a>
@@ -97,7 +91,6 @@
         </div>
     </header>
 
-    <!-- Hero Section Imersiva -->
     <section id="home" class="relative min-h-[90vh] flex items-center justify-center bg-brand-black text-white px-6 py-20 overflow-hidden">
         <div class="absolute inset-0 z-0 opacity-200 bg-cover bg-center mix-blend-overlay" style="background-image: url('recp.gif');"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/70 to-transparent z-0"></div>
@@ -127,7 +120,6 @@
                 </a>
             </div>
 
-            <!-- Mini Estatísticas Destacadas -->
             <div class="grid grid-cols-2 md:grid-cols-3 gap-6 pt-12 max-w-3xl mx-auto border-t border-white/10 text-left">
                 <div class="p-4 bg-white/5 rounded-lg border border-white/10 backdrop-blur-sm">
                     <p class="text-3xl font-black text-brand-red">+15 Anos</p>
@@ -145,7 +137,6 @@
         </div>
     </section>
 
-    <!-- Seção de Serviços / Especialidades (Com links atualizados para as páginas dedicadas) -->
     <section id="servicos" class="py-24 px-6 bg-brand-lightGray">
         <div class="max-w-7xl mx-auto">
             <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
@@ -156,7 +147,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Card 1: Transportadores -->
                 <a href="transportadores.html" class="bg-white p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 border-t-4 border-brand-black hover:border-brand-red group flex flex-col justify-between transform hover:-translate-y-1.5 block">
                     <div>
                         <div class="w-16 h-16 bg-brand-lightGray text-brand-red rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-red group-hover:text-white transition-all shadow-inner">
@@ -171,7 +161,6 @@
                     </div>
                 </a>
 
-                <!-- Card 2: Máquinas de Pátio -->
                 <a href="maquinas-patio.html" class="bg-white p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 border-t-4 border-brand-black hover:border-brand-red group flex flex-col justify-between transform hover:-translate-y-1.5 block">
                     <div>
                         <div class="w-16 h-16 bg-brand-lightGray text-brand-red rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-red group-hover:text-white transition-all shadow-inner">
@@ -186,7 +175,6 @@
                     </div>
                 </a>
 
-                <!-- Card 3: Equipamentos em Geral -->
                 <a href="equipamentos.html" class="bg-white p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 border-t-4 border-brand-black hover:border-brand-red group flex flex-col justify-between transform hover:-translate-y-1.5 block">
                     <div>
                         <div class="w-16 h-16 bg-brand-lightGray text-brand-red rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-red group-hover:text-white transition-all shadow-inner">
@@ -204,7 +192,181 @@
         </div>
     </section>
 
-    <!-- Área de Ferramentas / Simuladores Dinâmicos -->
+    <section id="estudo-caso" class="py-24 bg-brand-black text-white px-6 relative overflow-hidden border-t border-b border-neutral-800">
+        <div class="absolute inset-0 bg-grid-pattern opacity-10 z-0"></div>
+        <div class="max-w-7xl mx-auto relative z-10 space-y-12">
+            
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-brand-red font-bold text-xs uppercase tracking-widest bg-brand-red/20 px-3.5 py-1 rounded-full border border-brand-red/30">Estudo de Caso Exclusivo</span>
+                <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tight text-white">Tensionador Automático de Correia (TAC)</h2>
+                <div class="w-24 h-1.5 bg-brand-red mx-auto rounded-full"></div>
+                <p class="text-gray-400 text-sm md:text-base">Análise comparativa do desempenho dinâmico do TAC vs. sistema de contrapeso gravimétrico tradicional com base na norma CEMA e validações em campo.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="bg-brand-darkGray p-6 rounded-xl border border-neutral-800 flex flex-col justify-between shadow-lg">
+                    <div>
+                        <span class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Redução de Tensão Média</span>
+                        <p class="text-3xl font-black text-brand-red mt-2">32,5%</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-4">Alívio contínuo sem risco de patinamento</p>
+                </div>
+
+                <div class="bg-brand-darkGray p-6 rounded-xl border border-neutral-800 flex flex-col justify-between shadow-lg">
+                    <div>
+                        <span class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Ganho de Vida Útil</span>
+                        <p class="text-3xl font-black text-emerald-500 mt-2">Até +60%</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-4">Em roletes, mancais e componentes mecânicos</p>
+                </div>
+
+                <div class="bg-brand-darkGray p-6 rounded-xl border border-neutral-800 flex flex-col justify-between shadow-lg">
+                    <div>
+                        <span class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Economia de Energia</span>
+                        <p class="text-3xl font-black text-amber-500 mt-2">8% a 12%</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-4">Menor resistência ao rolamento da correia</p>
+                </div>
+
+                <div class="bg-brand-darkGray p-6 rounded-xl border border-neutral-800 flex flex-col justify-between shadow-lg">
+                    <div>
+                        <span class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Rendimento Mecânico</span>
+                        <p class="text-3xl font-black text-white mt-2">94,8%</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-4">Superando a estimativa teórica CEMA (92%)</p>
+                </div>
+            </div>
+
+            <div class="bg-brand-darkGray p-6 sm:p-8 rounded-2xl border border-neutral-800 shadow-xl">
+                <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
+                    <i class="fa-solid fa-chart-line text-brand-red"></i> Desempenho Teórico (Norma CEMA) vs. Medido (Físico)
+                </h3>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-slate-300">
+                            <thead class="text-xs text-slate-400 uppercase bg-brand-black">
+                                <tr>
+                                    <th class="px-4 py-3">Parâmetro</th>
+                                    <th class="px-4 py-3">Norma CEMA (Teórico)</th>
+                                    <th class="px-4 py-3 text-brand-red font-bold">TAC (Físico Medido)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-neutral-800">
+                                <tr>
+                                    <td class="px-4 py-3 font-medium text-white">Tempo de Resposta em Partida</td>
+                                    <td class="px-4 py-3 text-slate-400">&lt; 1,5 s</td>
+                                    <td class="px-4 py-3 font-semibold text-emerald-400">1,2 s</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 font-medium text-white">Estabilidade de Tensão em Regime</td>
+                                    <td class="px-4 py-3 text-slate-400">± 5%</td>
+                                    <td class="px-4 py-3 font-semibold text-emerald-400">± 3,2%</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 font-medium text-white">Redução da Tensão Média ($T_2$)</td>
+                                    <td class="px-4 py-3 text-slate-400">30%</td>
+                                    <td class="px-4 py-3 font-semibold text-emerald-400">32,5%</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 font-medium text-white">Rendimento Mecânico Global ($\eta$)</td>
+                                    <td class="px-4 py-3 text-slate-400">92,0%</td>
+                                    <td class="px-4 py-3 font-semibold text-emerald-400">94,8%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bg-brand-black/60 p-4 rounded-xl border border-neutral-800">
+                        <canvas id="cemaChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-brand-darkGray p-6 sm:p-8 rounded-2xl border border-neutral-800 shadow-xl">
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-white flex items-center gap-3">
+                        <i class="fa-solid fa-cubes text-brand-red"></i> Aumento da Vida Útil de Componentes Críticos
+                    </h3>
+                    <p class="text-sm text-slate-400 mt-1">Alívio do excesso de tensão contínua em relação ao sistema de contrapeso estático.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 bg-brand-black/60 p-4 rounded-xl border border-neutral-800">
+                        <canvas id="lifeSpanChart" height="230"></canvas>
+                    </div>
+
+                    <div class="space-y-3 flex flex-col justify-center">
+                        <div class="p-3 bg-brand-black/40 rounded-lg border-l-4 border-brand-red">
+                            <h4 class="text-white font-bold text-sm">Roletes (+60%)</h4>
+                            <p class="text-xs text-slate-400 mt-0.5">Redução da força radial exercida sobre o tubo e rolamentos.</p>
+                        </div>
+                        <div class="p-3 bg-brand-black/40 rounded-lg border-l-4 border-brand-red">
+                            <h4 class="text-white font-bold text-sm">Mancais & Rolamentos (+50%)</h4>
+                            <p class="text-xs text-slate-400 mt-0.5">Menor temperatura operacional e redução de fadiga.</p>
+                        </div>
+                        <div class="p-3 bg-brand-black/40 rounded-lg border-l-4 border-brand-red">
+                            <h4 class="text-white font-bold text-sm">Correia Transportadora (+45%)</h4>
+                            <p class="text-xs text-slate-400 mt-0.5">Preservação de emendas e redução de estiramento.</p>
+                        </div>
+                        <div class="p-3 bg-brand-black/40 rounded-lg border-l-4 border-brand-red">
+                            <h4 class="text-white font-bold text-sm">Revestimento do Tambor (+40%)</h4>
+                            <p class="text-xs text-slate-400 mt-0.5">Prevenção do patinamento da cobertura de borracha/cerâmica.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-brand-darkGray p-6 sm:p-8 rounded-2xl border border-neutral-800 shadow-xl">
+                <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
+                    <i class="fa-solid fa-industry text-brand-red"></i> Setores Monitorados & Resultados em Campo
+                </h3>
+
+                <div class="flex space-x-2 border-b border-neutral-800 mb-6 overflow-x-auto pb-2">
+                    <button onclick="switchTacTab('mineracao')" id="tac-btn-mineracao" class="tac-tab-btn px-4 py-2.5 text-sm font-semibold rounded-t-lg bg-brand-red text-white transition-all">
+                        <i class="fa-solid fa-mountain-sun mr-2"></i>Mineração
+                    </button>
+                    <button onclick="switchTacTab('portuario')" id="tac-btn-portuario" class="tac-tab-btn px-4 py-2.5 text-sm font-semibold rounded-t-lg text-slate-400 hover:text-white hover:bg-neutral-800 transition-all">
+                        <i class="fa-solid fa-ship mr-2"></i>Setor Portuário
+                    </button>
+                    <button onclick="switchTacTab('graos')" id="tac-btn-graos" class="tac-tab-btn px-4 py-2.5 text-sm font-semibold rounded-t-lg text-slate-400 hover:text-white hover:bg-neutral-800 transition-all">
+                        <i class="fa-solid fa-wheat-awn mr-2"></i>Grãos e Fertilizantes
+                    </button>
+                </div>
+
+                <div id="tac-tab-mineracao" class="tac-tab-content space-y-3">
+                    <h4 class="text-lg font-bold text-white">Minério de Ferro e Pelotização</h4>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        <strong>Condição Operacional:</strong> Transportadores de Longa Distância (TCLD) sob regime severo com picos transitórios de carga.
+                    </p>
+                    <div class="bg-brand-black/80 p-4 rounded-lg text-sm text-emerald-400 font-medium border border-emerald-500/20">
+                        <i class="fa-solid fa-circle-check mr-2"></i><strong>Resultado:</strong> Eliminação total de rupturas em emendas e redução de 75% nas paradas não programadas.
+                    </div>
+                </div>
+
+                <div id="tac-tab-portuario" class="tac-tab-content hidden space-y-3">
+                    <h4 class="text-lg font-bold text-white">Terminais de Carga Granel Portuária</h4>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        <strong>Condição Operacional:</strong> Múltiplas partidas/paradas em ambiente de maresia agressiva e oscilação térmica.
+                    </p>
+                    <div class="bg-brand-black/80 p-4 rounded-lg text-sm text-emerald-400 font-medium border border-emerald-500/20">
+                        <i class="fa-solid fa-circle-check mr-2"></i><strong>Resultado:</strong> Estanqueidade garantida dos atuadores e ausência de patinamento nos tambores durante chuva.
+                    </div>
+                </div>
+
+                <div id="tac-tab-graos" class="tac-tab-content hidden space-y-3">
+                    <h4 class="text-lg font-bold text-white">Agronegócio e Fertilizantes Corrosivos</h4>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        <strong>Condição Operacional:</strong> Ambientes impregnados por poeiras corrosivas e higroscópicas (fertilizantes NPK).
+                    </p>
+                    <div class="bg-brand-black/80 p-4 rounded-lg text-sm text-emerald-400 font-medium border border-emerald-500/20">
+                        <i class="fa-solid fa-circle-check mr-2"></i><strong>Resultado:</strong> Eliminação do travamento do mecanismo (comum em contrapesos em poço) e aumento na durabilidade de correias sanitárias.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
     <section id="calculadoras" class="py-24 bg-brand-black text-white px-6 relative overflow-hidden">
         <div class="absolute inset-0 bg-grid-pattern opacity-10 z-0"></div>
         <div class="max-w-7xl mx-auto relative z-10">
@@ -215,7 +377,6 @@
                 <p class="text-gray-400 text-sm md:text-base">Selecione abaixo a ferramenta de engenharia desejada para cálculos, dimensionamento rápido e validação de parâmetros.</p>
             </div>
 
-            <!-- Abas de Navegação das Ferramentas -->
             <div class="flex flex-wrap justify-center gap-3 mb-10">
                 <button onclick="switchTab(0)" id="tab-btn-0" class="tab-btn px-6 py-3.5 rounded-lg font-bold text-xs uppercase tracking-wider transition-all bg-brand-red text-white shadow-lg flex items-center gap-2">
                     <i class="fa-solid fa-arrows-split-up-and-left"></i> Transportador de Correia
@@ -228,7 +389,6 @@
                 </button>
             </div>
 
-            <!-- Containers dos iframes / Simuladores -->
             <div class="bg-brand-darkGray rounded-2xl p-4 md:p-8 border border-white/15 shadow-2xl backdrop-blur-md">
                 <div id="tab-content-0" class="tab-pane">
                     <iframe src="CalculoTR.html" width="100%" height="1200px" class="rounded-xl border-0 bg-white shadow-inner"></iframe>
@@ -242,15 +402,14 @@
             </div>
         </div>
     </section>
-
-    <!-- Sobre a Empresa -->
+    
     <section id="sobre" class="py-24 px-6 bg-white">
         <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
             <div class="w-full lg:w-1/2 space-y-6">
                 <span class="text-brand-red font-bold text-xs uppercase tracking-widest bg-brand-red/10 px-3.5 py-1 rounded-full">Sobre a Layout Engenharia</span>
                 <h2 class="text-3xl md:text-5xl font-black uppercase text-brand-black tracking-tight leading-tight">Tradição e Inovação em Engenharia Industrial</h2>
                 <p class="text-gray-600 leading-relaxed text-base">
-                    A Layout Engenharia destaca-se no mercado nacional pelo alto rigor técnico na concepção e execução de projetos para o setor mineral e de movimentação de granéis. Unimos uma equipe multidisciplinar altamente experiente com ferramentas analíticas e computacionais de última geração.
+                    A Layout Engenharia destaca-se no mercado nacional pelo alto rigor técnico na concepção e execução de projetos para o setor mineral e de movimentação de granéis. Unimos uma equipe multidisciplinar highly experiente com ferramentas analíticas e computacionais de última geração.
                 </p>
                 <div class="grid grid-cols-2 gap-6 pt-4">
                     <div class="border-l-4 border-brand-red pl-5 bg-brand-lightGray/60 p-4 rounded-r-xl">
@@ -276,7 +435,6 @@
         </div>
     </section>
 
-    <!-- Contato & Mapa -->
     <section id="contato" class="py-24 px-6 bg-brand-lightGray border-t border-gray-200">
         <div class="max-w-7xl mx-auto">
             <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
@@ -287,7 +445,6 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <!-- Informações de Contato e Mapa -->
                 <div class="space-y-6">
                     <div class="bg-white p-8 rounded-2xl shadow-md space-y-6 border border-gray-100">
                         <div class="flex items-start gap-4">
@@ -319,7 +476,6 @@
                         </div>
                     </div>
 
-                    <!-- Mapa Incorporado -->
                     <div class="rounded-2xl overflow-hidden shadow-md h-72 border border-gray-200">
                         <iframe 
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3751.366663579856!2d-43.93668992365098!3d-19.93997398135896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa69088b5555555%3A0x123456789abcdef!2sR.%20Prof.%20Moraes%2C%20562%20-%20Savassi%2C%20Belo%20Horizonte%20-%20MG%2C%2030150-370!5e0!3m2!1spt-BR!2sbr!4v1721500000000!5m2!1spt-BR!2sbr" 
@@ -332,7 +488,6 @@
                     </div>
                 </div>
 
-                <!-- Formulário Interativo -->
                 <div class="bg-white p-8 md:p-10 rounded-2xl shadow-md border border-gray-100 flex flex-col justify-center">
                     <form onsubmit="event.preventDefault(); alert('Mensagem enviada com sucesso para a Layout Engenharia!');" class="space-y-5">
                         <div>
@@ -360,7 +515,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-brand-black text-white/70 py-14 border-t-4 border-brand-red px-6">
         <div class="max-w-7xl mx-auto flex flex-col items-center gap-6 text-center">
             <div class="flex items-center gap-3">
@@ -371,13 +525,12 @@
                     Layout <span class="text-brand-red">Engenharia</span>
                 </div>
             </div>
-            <p class="text-sm max-w-md">&copy; 2026 Layout Engenharia. Todos os direitos reservados. Soluções estruturais e automação para mineração.</p>
+            <p class="text-sm max-w-md">© 2026 Layout Engenharia. Todos os direitos reservados. Soluções estruturais e automação para mineração.</p>
             <div class="w-16 h-0.5 bg-white/20"></div>
             <p class="text-xs text-white/40 uppercase tracking-widest font-semibold">Excelência e Inovação em Mineração</p>
         </div>
     </footer>
 
-    <!-- Scripts de Interatividade -->
     <script>
         // Toggle Menu Mobile
         function toggleMenu() {
@@ -415,6 +568,82 @@
                 }
             });
         }
+
+        // Alternância de Abas no Estudo de Caso TAC
+        function switchTacTab(tabId) {
+            document.querySelectorAll('.tac-tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tac-tab-btn').forEach(el => {
+                el.classList.remove('bg-brand-red', 'text-white');
+                el.classList.add('text-slate-400');
+            });
+
+            document.getElementById('tac-tab-' + tabId).classList.remove('hidden');
+            const activeBtn = document.getElementById('tac-btn-' + tabId);
+            activeBtn.classList.add('bg-brand-red', 'text-white');
+            activeBtn.classList.remove('text-slate-400');
+        }
+
+        // Gráfico 1: CEMA vs Físico
+        const ctxCema = document.getElementById('cemaChart').getContext('2d');
+        new Chart(ctxCema, {
+            type: 'bar',
+            data: {
+                labels: ['Redução Tensão (T2)', 'Rendimento Global (η)'],
+                datasets: [
+                    {
+                        label: 'Norma CEMA (Teórico %)',
+                        data: [30, 92],
+                        backgroundColor: 'rgba(100, 116, 139, 0.6)',
+                        borderColor: 'rgba(100, 116, 139, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'TAC - Layout (Medido %)',
+                        data: [32.5, 94.8],
+                        backgroundColor: 'rgba(229, 57, 53, 0.85)',
+                        borderColor: 'rgba(229, 57, 53, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8', font: { family: 'Inter' } } }
+                },
+                scales: {
+                    y: { beginAtZero: true, ticks: { color: '#94a3b8' }, grid: { color: '#262626' } },
+                    x: { ticks: { color: '#94a3b8' }, grid: { color: '#262626' } }
+                }
+            }
+        });
+
+        // Gráfico 2: Vida Útil dos Componentes
+        const ctxLife = document.getElementById('lifeSpanChart').getContext('2d');
+        new Chart(ctxLife, {
+            type: 'bar',
+            indexAxis: 'y',
+            data: {
+                labels: ['Revestimento Tambor', 'Correia Transportadora', 'Mancais / Rolamentos', 'Roletes'],
+                datasets: [{
+                    label: '% de Aumento na Vida Útil',
+                    data: [40, 45, 50, 60],
+                    backgroundColor: 'rgba(229, 57, 53, 0.85)',
+                    borderColor: 'rgba(229, 57, 53, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8', font: { family: 'Inter' } } }
+                },
+                scales: {
+                    x: { beginAtZero: true, ticks: { color: '#94a3b8' }, grid: { color: '#262626' } },
+                    y: { ticks: { color: '#94a3b8' }, grid: { color: '#262626' } }
+                }
+            }
+        });
     </script>
 </body>
 </html>
